@@ -11,20 +11,66 @@
     });
 </script>
 <div id="print_var_container" title="Print Var 0.1">
-      <span>
-          [
-          <ul>
-              <li><span>0</span><span> => </span><span>123</span></li>
-              <li><span>1</span><span> => </span><span>"строка"</span></li>
-              <li><span>1</span><span> => </span><span>[
-                  <ul>
-                      <li><span>234</span><span> => </span><span>false</span></li>
-                      <li><span>sdfsd</span><span> => </span><span>{}</span></li>
-                      <li><span>sdfsd</span><span> => </span><span>true</span></li>
-                  </ul>
-                  ]</span></li>
-          </ul>
-          ]
+      <span class="value">
+          <i class="ui-icon-triangle-1-s"></i>
+          <span class="name">params</span>
+          <span class="count">[5]</span>
+          <span class="value">
+            <ul>
+                <li>
+                    <span class="name">isFirst</span>
+                    <span class="separator">:</span>
+                    <span class="value">false</span>
+                </li>
+                <li>
+                    <span class="name">name</span>
+                    <span class="separator">:</span>
+                    <span class="value">123werwer</span>
+                </li>
+                <li>
+                    <span class="name">amount</span>
+                    <span class="separator">:</span>
+                    <span class="value">345</span>
+                </li>
+                <li>
+                    <span class="name">parent</span>
+                    <span class="count">{3}</span>
+                    <span class="value">
+                        <ul>
+                            <li>
+                                <span class="name">isFirst</span>
+                                <span class="separator">:</span>
+                                <span class="value">false</span>
+                            </li>
+                            <li>
+                                <span class="name">name</span>
+                                <span class="separator">:</span>
+                                <span class="value">123werwer</span>
+                            </li>
+                            <li>
+                                <span class="name">amount</span>
+                                <span class="separator">:</span>
+                                <span class="value">345</span>
+                            </li>
+                            <li>
+                                <span class="name">GetParams</span>
+                                <span class="count">(2)</span>
+                                <span class="value">
+                                    <ul>
+                                        <li>
+                                            <span class="name">visible</span>
+                                        </li>
+                                        <li>
+                                            <span class="name">data</span>
+                                        </li>
+                                    </ul>
+                                </span>
+                            </li>
+                        </ul>
+                    </span>
+                </li>
+            </ul>
+          </span>
       </span>
 </div>
 
