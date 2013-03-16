@@ -2,14 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f33f437d-7036-4a8c-918f-b750f95c6aa7" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/index.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/print_var.php" afterPath="$PROJECT_DIR$/print_var.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="print_var.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="f33f437d-7036-4a8c-918f-b750f95c6aa7" time="1363465048486" ignored="false" />
+    <file path="/Dummy.txt" changelist="f33f437d-7036-4a8c-918f-b750f95c6aa7" time="1363465124368" ignored="false" />
     <file path="/index.php" changelist="f33f437d-7036-4a8c-918f-b750f95c6aa7" time="1363464816672" ignored="false" />
     <file path="/print_var.php" changelist="f33f437d-7036-4a8c-918f-b750f95c6aa7" time="1363464966010" ignored="false" />
     <file path="/gettype.php" changelist="f33f437d-7036-4a8c-918f-b750f95c6aa7" time="1363458675363" ignored="false" />
@@ -67,7 +64,7 @@
       <file leaf-file-name="index.php" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/index.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="47" column="4" selection-start="820" selection-end="820" vertical-scroll-proportion="0.2899263">
+            <state line="47" column="4" selection-start="820" selection-end="820" vertical-scroll-proportion="0.29135802">
               <folding />
             </state>
           </provider>
@@ -218,7 +215,11 @@
       <created>1362082754233</created>
       <updated>1362082754233</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Print Var service">
+      <created>1363465130489</created>
+      <updated>1363465130490</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TodoView" selected-index="0">
@@ -243,7 +244,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="978" height="616" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3267974" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32894737" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -307,7 +308,7 @@
     <option name="WRAP_WHEN_TYPING_REACHES_RIGHT_MARGIN" value="false" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="$ replace jQuery" />
+    <option name="LAST_COMMIT_MESSAGE" value="Print Var service" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="false" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -327,6 +328,7 @@
     <MESSAGE value="style and slideUp/slideDown ul" />
     <MESSAGE value="Print Var service and function" />
     <MESSAGE value="$ replace jQuery" />
+    <MESSAGE value="Print Var service" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -569,7 +571,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/index.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="47" column="4" selection-start="820" selection-end="820" vertical-scroll-proportion="0.2899263">
+        <state line="47" column="4" selection-start="820" selection-end="820" vertical-scroll-proportion="0.29135802">
           <folding />
         </state>
       </provider>
