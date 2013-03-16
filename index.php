@@ -29,7 +29,7 @@ class Test{
 
     }
 
-    public function Method3($param1=1, $param2=false){
+    public function Method3($param1=1, $param2){
 
     }
 
@@ -55,5 +55,18 @@ class Test{
 }
 
 $obj = new Test;
+$arr = array(
+    'string',
+    true,
+    array(
+        'obj' => $obj,
+        null,
+        34.56,
+        5675
+    )
+);
 
-print_var($obj);
+//print_var($arr, false);
+//print_var(123);
+//print_var('str');
+print_var(true);
