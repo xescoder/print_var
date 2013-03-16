@@ -223,7 +223,7 @@ class PrintVarService{
     public static function PrintVar($var, $closed=true){
         self::$closed = $closed;
 
-        print '
+        $strStart = '
             <link rel="stylesheet" type="text/css" href="http://yandex.st/jquery-ui/1.10.1/themes/smoothness/jquery-ui.min.css">
             <style type="text/css">
                 #print_var_container{
@@ -323,11 +323,13 @@ class PrintVarService{
             <div id="print_var_container" title="Print Var 0.1">
         ';
 
-        self::PrintValue($var);
-
-        print '
+        $strEnd = '
             </div>
         ';
+
+        print preg_replace('/[\s]{2,}/', ' ', $strStart);
+        self::PrintValue($var);
+        print preg_replace('/[\s]{2,}/', ' ', $strEnd);
     }
 }
 
