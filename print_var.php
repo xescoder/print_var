@@ -1,7 +1,117 @@
 <?php
 
 class PrintVarService{
+    const jQuerySource = 'http://yandex.st/jquery/1.9.1/jquery.min.js';
+    const jQueryUISource = 'http://yandex.st/jquery-ui/1.10.1/jquery-ui.min.js';
+    const jQueryUIThemeSource = 'http://yandex.st/jquery-ui/1.10.1/themes/smoothness/jquery-ui.min.css';
+
     private static $closed = true;
+
+    private static function PrintStyle(){
+        $style = '
+            <style type="text/css">
+                #print_var_container{
+                    overflow: auto;
+                    background-color: #f4f4f4;
+                    padding-left: 25px;
+                    width: 200px;
+                    height: 50px;
+                }
+
+                #print_var_container ul{
+                    overflow: visible;
+                    list-style-type: none;
+                    display: block;
+                    margin: 0;
+                    padding: 0;
+                    padding-left: 30px;
+                }
+
+                #print_var_container .button {
+                    width: 15px;
+                    height: 15px;
+                    float: left;
+                    margin: 0;
+                    margin-top: 6px;
+                    margin-left: -15px;
+                }
+
+                #print_var_container i{
+                    display: block;
+                    margin: 4px;
+                    width: 0px;
+                    height: 0px;
+                    border-style: solid;
+                }
+
+                #print_var_container .open{
+                    border-width: 7px 4px 0 4px;
+                    border-color: #000 transparent transparent transparent;
+                }
+
+                #print_var_container .close{
+                    border-width: 4px 0 4px 7px;
+                    border-color: transparent transparent transparent #000;
+                }
+
+                #print_var_container .type{
+                    padding-right: 5px;
+                }
+
+                #print_var_container .name{
+                    padding-right: 5px;
+                }
+
+                #print_var_container .separator{
+                    padding-right: 5px;
+                }
+            </style>
+        ';
+
+        print preg_replace('/[\s]{2,}/', ' ', $style);
+    }
+
+    private static function PrintScript(){
+        $script = '
+            <script type="text/javascript">
+                jQuery(function(){
+                    jQuery("#print_var_container").dialog({
+                        autoOpen: true,
+                        draggable: true,
+                        resizable: true,
+                        minHeight: "50px",
+                        minWidth: "200px"
+                    });
+
+                    jQuery("#print_var_container .button").click(function(){
+                        var _this = jQuery(this).find("i");
+                        if(_this.hasClass("open")){
+                            _this.parent()
+                                 .parent()
+                                 .find("ul")
+                                 .slideUp("fast")
+                                 .parent()
+                                 .parent()
+                                 .find("i")
+                                 .removeClass("open")
+                                 .addClass("close");
+                        } else {
+                            _this.removeClass("close")
+                                 .addClass("open");
+
+                            _this.parent()
+                                 .parent()
+                                 .find("> span > ul")
+                                 .slideDown("fast");
+                        }
+                        return false;
+                    });
+                });
+            </script>
+        ';
+
+        print preg_replace('/[\s]{2,}/', ' ', $script);
+    }
 
     private static function PrintButton(){
         print '<div class="button"><i class="' . (self::$closed ? 'close' : 'open') . '"></i></div>';
@@ -223,116 +333,19 @@ class PrintVarService{
     public static function PrintVar($var, $closed=true){
         self::$closed = $closed;
 
-        $strStart = '
-            <link rel="stylesheet" type="text/css" href="http://yandex.st/jquery-ui/1.10.1/themes/smoothness/jquery-ui.min.css">
-            <style type="text/css">
-                #print_var_container{
-                    overflow: auto;
-                    background-color: #f4f4f4;
-                    padding-left: 25px;
-                    width: 200px;
-                    height: 50px;
-                }
+        print '<link rel="stylesheet" type="text/css" href="' . self::jQueryUIThemeSource . '">';
+        self::PrintStyle();
 
-                #print_var_container ul{
-                    overflow: visible;
-                    list-style-type: none;
-                    display: block;
-                    margin: 0;
-                    padding: 0;
-                    padding-left: 30px;
-                }
+        print '<script type="text/javascript" src="' . self::jQuerySource . '"></script>';
+        print '<script type="text/javascript" src="' . self::jQueryUISource . '"></script>';
+        self::PrintScript();
 
-                #print_var_container .button {
-                    width: 15px;
-                    height: 15px;
-                    float: left;
-                    margin: 0;
-                    margin-top: 6px;
-                    margin-left: -15px;
-                }
-
-                #print_var_container i{
-                    display: block;
-                    margin: 4px;
-                    width: 0px;
-                    height: 0px;
-                    border-style: solid;
-                }
-
-                #print_var_container .open{
-                    border-width: 7px 4px 0 4px;
-                    border-color: #000 transparent transparent transparent;
-                }
-
-                #print_var_container .close{
-                    border-width: 4px 0 4px 7px;
-                    border-color: transparent transparent transparent #000;
-                }
-
-                #print_var_container .type{
-                    padding-right: 5px;
-                }
-
-                #print_var_container .name{
-                    padding-right: 5px;
-                }
-
-                #print_var_container .separator{
-                    padding-right: 5px;
-                }
-            </style>
-
-            <script type="text/javascript" src="http://yandex.st/jquery/1.9.1/jquery.min.js"></script>
-            <script type="text/javascript" src="http://yandex.st/jquery-ui/1.10.1/jquery-ui.min.js"></script>
-            <script type="text/javascript">
-                jQuery(function(){
-                    jQuery("#print_var_container").dialog({
-                        autoOpen: true,
-                        draggable: true,
-                        resizable: true,
-                        minHeight: "50px",
-                        minWidth: "200px"
-                    });
-
-                    jQuery("#print_var_container .button").click(function(){
-                        var _this = jQuery(this).find("i");
-                        if(_this.hasClass("open")){
-                            _this.parent()
-                                 .parent()
-                                 .find("ul")
-                                 .slideUp("fast")
-                                 .parent()
-                                 .parent()
-                                 .find("i")
-                                 .removeClass("open")
-                                 .addClass("close");
-                        } else {
-                            _this.removeClass("close")
-                                 .addClass("open");
-
-                            _this.parent()
-                                 .parent()
-                                 .find("> span > ul")
-                                 .slideDown("fast");
-                        }
-                        return false;
-                    });
-                });
-            </script>
-            <div id="print_var_container" title="Print Var 0.1">
-        ';
-
-        $strEnd = '
-            </div>
-        ';
-
-        print preg_replace('/[\s]{2,}/', ' ', $strStart);
+        print '<div id="print_var_container" title="Print Var 0.1">';
         self::PrintValue($var);
-        print preg_replace('/[\s]{2,}/', ' ', $strEnd);
+        print '</div>';
     }
 }
 
-function print_var($var, $closed=true){
+function print_var($var, $closed=false){
     PrintVarService::PrintVar($var, $closed);
 }

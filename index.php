@@ -66,7 +66,7 @@ $arr = array(
     )
 );
 
-print_var($arr, false);
+print_var($arr);
 //print_var(123);
 //print_var('str');
 //print_var(true);
