@@ -59,6 +59,12 @@ $arr = array(
     'string',
     true,
     array(
+        'arObj' => array(
+            9 => $obj,
+            8 => array(
+                $obj, $obj, $obj,
+            )
+        ),
         'obj' => $obj,
         null,
         34.56,

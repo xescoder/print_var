@@ -25,6 +25,7 @@ class PrintVarService{
                     margin: 0;
                     padding: 0;
                     padding-left: 30px;
+                    border-left: #a3a3a3 1px solid;
                 }
 
                 #print_var_container .button {
@@ -32,8 +33,7 @@ class PrintVarService{
                     height: 15px;
                     float: left;
                     margin: 0;
-                    margin-top: 6px;
-                    margin-left: -15px;
+                    margin-left: -17px;
                 }
 
                 #print_var_container i{
@@ -42,16 +42,6 @@ class PrintVarService{
                     width: 0px;
                     height: 0px;
                     border-style: solid;
-                }
-
-                #print_var_container .open{
-                    border-width: 7px 4px 0 4px;
-                    border-color: #000 transparent transparent transparent;
-                }
-
-                #print_var_container .close{
-                    border-width: 4px 0 4px 7px;
-                    border-color: transparent transparent transparent #000;
                 }
 
                 #print_var_container .type{
@@ -79,30 +69,31 @@ class PrintVarService{
                         autoOpen: true,
                         draggable: true,
                         resizable: true,
-                        minHeight: "50px",
-                        minWidth: "200px"
+                        minHeight: 50,
+                        minWidth: 300,
+                        width: "auto"
                     });
 
                     jQuery("#print_var_container .button").click(function(){
-                        var _this = jQuery(this).find("i");
-                        if(_this.hasClass("open")){
-                            _this.parent()
+                        var _this = jQuery(this);
+                        if(_this.hasClass("close")){
+                            _this.text("+")
+                                 .removeClass("close")
+                                 .addClass("open")
                                  .parent()
                                  .find("ul")
-                                 .slideUp("fast")
-                                 .parent()
-                                 .parent()
-                                 .find("i")
-                                 .removeClass("open")
-                                 .addClass("close");
-                        } else {
-                            _this.removeClass("close")
+                                 .slideUp(200)
+                                 .find(".button")
+                                 .text("+")
+                                 .removeClass("close")
                                  .addClass("open");
-
-                            _this.parent()
+                        } else {
+                            _this.text("-")
+                                 .removeClass("open")
+                                 .addClass("close")
                                  .parent()
                                  .find("> span > ul")
-                                 .slideDown("fast");
+                                 .slideDown(200);
                         }
                         return false;
                     });
@@ -114,7 +105,7 @@ class PrintVarService{
     }
 
     private static function PrintButton(){
-        print '<div class="button"><i class="' . (self::$closed ? 'close' : 'open') . '"></i></div>';
+        print '<div class="button ' . (self::$closed ? 'open' : 'close') . '">' . (self::$closed ? '+' : '-') . '</div>';
     }
 
     private static function PrintType($type){
@@ -340,7 +331,7 @@ class PrintVarService{
         print '<script type="text/javascript" src="' . self::jQueryUISource . '"></script>';
         self::PrintScript();
 
-        print '<div id="print_var_container" title="Print Var 0.1">';
+        print '<div id="print_var_container" title="Print Var">';
         self::PrintValue($var);
         print '</div>';
     }
