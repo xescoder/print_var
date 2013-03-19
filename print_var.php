@@ -32,7 +32,7 @@ class PrintVarService{
                 #print_var_container {
                     font-family: Courier;
                     overflow: auto;
-                    background-color: #f4f4f4;
+                    background-color: white;
                     padding-left: 25px;
                     width: 200px;
                     height: 50px;
@@ -120,7 +120,7 @@ class PrintVarService{
                     position: absolute;
                     z-index: 10000000000000;
                     padding: 20px;
-                    padding-left: 30px;
+                    padding-left: 25px;
                     background-color: white;
                     border: 2px solid black;
                     top: 0px;
@@ -141,40 +141,44 @@ class PrintVarService{
     private static function PrintScript(){
         $script = '
             <script type="text/javascript">
-                jQuery(function(){
-                    jQuery("#print_var_container").dialog({
-                        autoOpen: true,
-                        draggable: true,
-                        resizable: true,
-                        minHeight: 50,
-                        minWidth: 300,
-                        width: "auto"
-                    });
+                (function( $ ){
+                    $(function(){
+                        $("#print_var_container").removeClass("no_js");
 
-                    jQuery("#print_var_container .button").click(function(){
-                        var _this = jQuery(this);
-                        if(_this.hasClass("close")){
-                            _this.text("+")
-                                 .removeClass("close")
-                                 .addClass("open")
-                                 .parent()
-                                 .find("ul")
-                                 .slideUp(200)
-                                 .find(".button")
-                                 .text("+")
-                                 .removeClass("close")
-                                 .addClass("open");
-                        } else {
-                            _this.text("-")
-                                 .removeClass("open")
-                                 .addClass("close")
-                                 .parent()
-                                 .find("> span > ul")
-                                 .slideDown(200);
-                        }
-                        return false;
+                        $("#print_var_container").dialog({
+                            autoOpen: true,
+                            draggable: true,
+                            resizable: true,
+                            minHeight: 50,
+                            minWidth: 300,
+                            width: "auto"
+                        });
+
+                        $("#print_var_container .button").click(function(){
+                            var _this = $(this);
+                            if(_this.hasClass("close")){
+                                _this.text("+")
+                                     .removeClass("close")
+                                     .addClass("open")
+                                     .parent()
+                                     .find("ul")
+                                     .slideUp(200)
+                                     .find(".button")
+                                     .text("+")
+                                     .removeClass("close")
+                                     .addClass("open");
+                            } else {
+                                _this.text("-")
+                                     .removeClass("open")
+                                     .addClass("close")
+                                     .parent()
+                                     .find("> span > ul")
+                                     .slideDown(200);
+                            }
+                            return false;
+                        });
                     });
-                });
+                })(jQuery);
             </script>
         ';
 
