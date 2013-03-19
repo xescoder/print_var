@@ -28,7 +28,8 @@ class PrintVarService{
     private static function PrintStyle(){
         $style = '
             <style type="text/css">
-                #print_var_container{
+                /* With JS */
+                #print_var_container {
                     font-family: Courier;
                     overflow: auto;
                     background-color: #f4f4f4;
@@ -37,14 +38,14 @@ class PrintVarService{
                     height: 50px;
                 }
 
-                #print_var_container ul{
+                #print_var_container ul {
                     overflow: visible;
                     list-style-type: none;
                     display: block;
                     margin: 0;
                     padding: 0;
                     padding-left: 30px;
-                    border-left: #a3a3a3 1px solid;
+                    border-left: #c5c5c5 1px solid;
                 }
 
                 #print_var_container .button {
@@ -56,7 +57,7 @@ class PrintVarService{
                     margin-left: -17px;
                 }
 
-                #print_var_container i{
+                #print_var_container i {
                     display: block;
                     margin: 4px;
                     width: 0px;
@@ -64,54 +65,72 @@ class PrintVarService{
                     border-style: solid;
                 }
 
-                #print_var_container .type{
+                #print_var_container .type {
                     padding-right: 5px;
                 }
 
-                #print_var_container .name{
+                #print_var_container .name {
                     color: #66170D;
                     padding-right: 5px;
                 }
 
-                #print_var_container .separator{
+                #print_var_container .separator {
                     color: #000000;
                     padding-right: 5px;
                 }
 
-                #print_var_container .count{
+                #print_var_container .count {
                     color: #000000;
                 }
 
-                #print_var_container .null{
+                #print_var_container .null {
                     color: #0A1F80;
                 }
 
-                #print_var_container .bool{
+                #print_var_container .bool {
                     color: #0A1F80;
                 }
 
-                #print_var_container .int{
+                #print_var_container .int {
                     color: #1F45F7;
                 }
 
-                #print_var_container .float{
+                #print_var_container .float {
                     color: #1F45F7;
                 }
 
-                #print_var_container .string{
+                #print_var_container .string {
                     color: #3C811B;
                 }
 
-                #print_var_container .array{
+                #print_var_container .array {
                     color: #0A1F80;
                 }
 
-                #print_var_container .object{
+                #print_var_container .object {
                     color: #000000;
                 }
 
-                #print_var_container .method{
+                #print_var_container .method {
                     color: #000000;
+                }
+
+                /* No JS */
+                #print_var_container.no_js {
+                    position: absolute;
+                    z-index: 10000000000000;
+                    padding: 20px;
+                    padding-left: 30px;
+                    background-color: white;
+                    border: 2px solid black;
+                    top: 0px;
+                    left 0px;
+                    width: auto;
+                    height: auto;
+                }
+
+                #print_var_container.no_js .button {
+                    display: none;
                 }
             </style>
         ';
