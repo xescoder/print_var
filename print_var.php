@@ -5,6 +5,8 @@ class PrintVarService{
     const jQueryUISource = 'http://yandex.st/jquery-ui/1.10.1/jquery-ui.min.js';
     const jQueryUIThemeSource = 'http://yandex.st/jquery-ui/1.10.1/themes/smoothness/jquery-ui.min.css';
 
+    private static $enableJS = false;
+
     private static $font = 'Courier';
 
     private static $colors = array(
@@ -16,8 +18,8 @@ class PrintVarService{
             'float' => '#1F45F7',
             'string' => '#3C811B',
             'array' => '#0A1F80',
-            'object' => '#000000 ',
-            'method' => '#000000 ',
+            'object' => '#000000',
+            'method' => '#000000',
         )
     );
 
@@ -27,7 +29,7 @@ class PrintVarService{
         $style = '
             <style type="text/css">
                 #print_var_container{
-                    font-family: ' . self::$font . ';
+                    font-family: Courier;
                     overflow: auto;
                     background-color: #f4f4f4;
                     padding-left: 25px;
@@ -67,7 +69,7 @@ class PrintVarService{
                 }
 
                 #print_var_container .name{
-                    color: ' . self::$colors['name'] . ';
+                    color: #66170D;
                     padding-right: 5px;
                 }
 
@@ -81,35 +83,35 @@ class PrintVarService{
                 }
 
                 #print_var_container .null{
-                    color: ' . self::$colors['types']['null'] . ';
+                    color: #0A1F80;
                 }
 
                 #print_var_container .bool{
-                    color: ' . self::$colors['types']['bool'] . ';
+                    color: #0A1F80;
                 }
 
                 #print_var_container .int{
-                    color: ' . self::$colors['types']['int'] . ';
+                    color: #1F45F7;
                 }
 
                 #print_var_container .float{
-                    color: ' . self::$colors['types']['float'] . ';
+                    color: #1F45F7;
                 }
 
                 #print_var_container .string{
-                    color: ' . self::$colors['types']['string'] . ';
+                    color: #3C811B;
                 }
 
                 #print_var_container .array{
-                    color: ' . self::$colors['types']['array'] . ';
+                    color: #0A1F80;
                 }
 
                 #print_var_container .object{
-                    color: ' . self::$colors['types']['object'] . ';
+                    color: #000000;
                 }
 
                 #print_var_container .method{
-                    color: ' . self::$colors['types']['method'] . ';
+                    color: #000000;
                 }
             </style>
         ';
@@ -395,11 +397,13 @@ class PrintVarService{
         print '<link rel="stylesheet" type="text/css" href="' . self::jQueryUIThemeSource . '">';
         self::PrintStyle();
 
-        print '<script type="text/javascript" src="' . self::jQuerySource . '"></script>';
-        print '<script type="text/javascript" src="' . self::jQueryUISource . '"></script>';
-        self::PrintScript();
+        if(self::$enableJS){
+            print '<script type="text/javascript" src="' . self::jQuerySource . '"></script>';
+            print '<script type="text/javascript" src="' . self::jQueryUISource . '"></script>';
+            self::PrintScript();
+        }
 
-        print '<div id="print_var_container" title="Print Var">';
+        print '<div id="print_var_container" class="no_js" title="Print Var">';
         self::PrintValue($var);
         print '</div>';
     }
