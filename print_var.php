@@ -5,7 +5,7 @@ class PrintVarService{
     const jQueryUISource = 'http://yandex.st/jquery-ui/1.10.1/jquery-ui.min.js';
     const jQueryUIThemeSource = 'http://yandex.st/jquery-ui/1.10.1/themes/smoothness/jquery-ui.min.css';
 
-    private static $enableJS = false;
+    private static $enableJS = true;
 
     private static $font = 'Courier';
 
@@ -63,10 +63,6 @@ class PrintVarService{
                     width: 0px;
                     height: 0px;
                     border-style: solid;
-                }
-
-                #print_var_container .type {
-                    padding-right: 5px;
                 }
 
                 #print_var_container .name {
@@ -190,12 +186,12 @@ class PrintVarService{
     }
 
     private static function PrintType($type){
-        /*print '<span class="type ' . $type . '">';
+        print '<span class="type ' . $type . '">(';
         print $type;
-        print '</span>';*/
+        print ')</span>';
     }
 
-    private static function PrintName($name, $separator='='){
+    private static function PrintName($name){
         if(is_null($name)) return;
         print '<span class="name">';
 
@@ -208,6 +204,8 @@ class PrintVarService{
     }
 
     private static function PrintSeparator($separator='='){
+        if(empty($separator)) return;
+
         print '<span class="separator">';
         print $separator;
         print '</span>';
@@ -215,7 +213,6 @@ class PrintVarService{
 
     private static function PrintValue($var, $name=null, $separator='='){
         if(is_null($var)){
-            self::PrintType('null');
             self::PrintName($name);
             self::PrintSeparator($separator);
             self::PrintNull($var);
@@ -223,48 +220,49 @@ class PrintVarService{
         }
 
         if(is_bool($var)){
-            self::PrintType('bool');
             self::PrintName($name);
             self::PrintSeparator($separator);
+            self::PrintType('bool');
             self::PrintBool($var);
             return;
         }
 
         if(is_integer($var)){
-            self::PrintType('int');
             self::PrintName($name);
             self::PrintSeparator($separator);
+            self::PrintType('int');
             self::PrintInteger($var);
             return;
         }
 
         if(is_float($var)){
-            self::PrintType('float');
             self::PrintName($name);
             self::PrintSeparator($separator);
+            self::PrintType('float');
             self::PrintFloat($var);
             return;
         }
 
         if(is_string($var)){
-            self::PrintType('string');
             self::PrintName($name);
             self::PrintSeparator($separator);
+            self::PrintType('string');
             self::PrintString($var);
             return;
         }
 
         if(is_array($var)){
             self::PrintButton();
-            self::PrintType('array');
             self::PrintName($name);
+            self::PrintSeparator($separator);
+            self::PrintType('array');
             self::PrintArray($var);
             return;
         }
 
         if(is_object($var)){
             self::PrintButton();
-            self::PrintObject($var, $name);
+            self::PrintObject($var, $name, $separator);
             return;
         }
     }
@@ -312,7 +310,10 @@ class PrintVarService{
         print '</ul></span>';
     }
 
-    private static function PrintObject($var, $name=null){
+    private static function PrintObject($var, $name=null, $separator='='){
+        self::PrintName($name);
+        self::PrintSeparator($separator);
+
         $className = get_class($var);
 
         $reflect = new ReflectionClass($var);
@@ -320,7 +321,6 @@ class PrintVarService{
         $methods = $reflect->getMethods(ReflectionMethod::IS_PUBLIC);
 
         print '<span class="type object">' . $className . '</span>';
-        self::PrintName($name);
 
         $countProps = 0;
         foreach($props as $prop){
@@ -367,39 +367,39 @@ class PrintVarService{
                 {
                     $default = $param->getDefaultValue();
                     if(is_null($default)){
-                        self::PrintType('null');
                         print '<span class="name">$' . $name . '</span>';
                         self::PrintSeparator('=');
                         self::PrintNull($default);
                     }
                     else if(is_bool($default)){
-                        self::PrintType('bool');
                         print '<span class="name">$' . $name . '</span>';
                         self::PrintSeparator('=');
+                        self::PrintType('bool');
                         self::PrintBool($default);
                     }
                     else if(is_integer($default)){
-                        self::PrintType('int');
                         print '<span class="name">$' . $name . '</span>';
                         self::PrintSeparator('=');
+                        self::PrintType('int');
                         self::PrintInteger($default);
                     }
                     else if(is_float($default)){
-                        self::PrintType('float');
                         print '<span class="name">$' . $name . '</span>';
                         self::PrintSeparator('=');
+                        self::PrintType('float');
                         self::PrintFloat($default);
                     }
                     else if(is_string($default)){
-                        self::PrintType('string');
                         print '<span class="name">$' . $name . '</span>';
                         self::PrintSeparator('=');
+                        self::PrintType('string');
                         self::PrintString($default);
                     }
                     else if(is_array($default)){
                         self::PrintButton();
-                        self::PrintType('array');
                         print '<span class="name">$' . $name . '</span>';
+                        self::PrintSeparator('=');
+                        self::PrintType('array');
                         self::PrintArray($default);
                     }
                 } else {
@@ -427,7 +427,7 @@ class PrintVarService{
         }
 
         print '<div id="print_var_container" class="no_js" title="Print Var">';
-        self::PrintValue($var);
+        self::PrintValue($var, null, null);
         print '</div>';
     }
 }
