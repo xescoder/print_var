@@ -6,23 +6,6 @@ class PrintVarService{
     const jQueryUIThemeSource = 'http://yandex.st/jquery-ui/1.10.1/themes/smoothness/jquery-ui.min.css';
 
     private static $enableJS = true;
-
-    private static $font = 'Courier';
-
-    private static $colors = array(
-        'name' => '#66170D',
-        'types' => array(
-            'null' => '#0A1F80',
-            'bool' => '#0A1F80',
-            'int' => '#1F45F7',
-            'float' => '#1F45F7',
-            'string' => '#3C811B',
-            'array' => '#0A1F80',
-            'object' => '#000000',
-            'method' => '#000000',
-        )
-    );
-
     private static $closed = true;
 
     private static function PrintStyle(){
