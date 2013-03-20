@@ -142,9 +142,11 @@ class PrintVarService{
             <script type="text/javascript">
                 (function( $ ){
                     $(function(){
-                        $("#print_var_container").removeClass("no_js");
+                        var container = $("#print_var_container");
 
-                        $("#print_var_container").dialog({
+                        container.removeClass("no_js");
+
+                        container.dialog({
                             autoOpen: true,
                             draggable: true,
                             resizable: true,
@@ -153,7 +155,7 @@ class PrintVarService{
                             width: "auto"
                         });
 
-                        $("#print_var_container .button").click(function(){
+                        container.find(".button").click(function(){
                             var _this = $(this);
                             if(_this.hasClass("close")){
                                 _this.text("+")
