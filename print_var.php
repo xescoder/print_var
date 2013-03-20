@@ -49,12 +49,32 @@ class PrintVarService{
                 }
 
                 #print_var_container .button {
+                    background-color: #e6e6e6;
                     color: #000000;
                     width: 15px;
                     height: 15px;
                     float: left;
                     margin: 0;
                     margin-left: -17px;
+                    cursor: hand;
+                }
+
+                #print_var_container .button:hover {
+                    background-color: #bebebe;
+                }
+
+                #print_var_container .close {
+                    padding-left: 3px;
+                    padding-bottom: 2px;
+                    padding-right: 0px;
+                    padding-top: 0px;
+                }
+
+                #print_var_container .open {
+                    padding-left: 3px;
+                    padding-bottom: 3px;
+                    padding-right: 0px;
+                    padding-top: 0px;
                 }
 
                 #print_var_container i {
