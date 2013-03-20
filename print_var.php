@@ -38,7 +38,7 @@ class PrintVarService{
                     height: 15px;
                     float: left;
                     margin: 0;
-                    margin-left: -17px;
+                    margin-left: -20px;
                     cursor: hand;
                 }
 
