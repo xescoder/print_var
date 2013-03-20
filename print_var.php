@@ -155,6 +155,8 @@ class PrintVarService{
                             width: "auto"
                         });
 
+                        container.closest(".ui-dialog").css({zIndex: 1000000000});
+
                         container.find(".button").click(function(){
                             var _this = $(this);
                             if(_this.hasClass("close")){
