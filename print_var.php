@@ -618,6 +618,11 @@ class PrintVarService{
     }
 }
 
+/**
+ * Print variables
+ * @param mixed $var Variable
+ * @param bool $closed Minimize array and object values
+ */
 function print_var($var, $closed=false){
     PrintVarService::PrintVar($var, $closed);
 }
