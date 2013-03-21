@@ -16,6 +16,9 @@ $arr = array(
 /*  include print_var tool  */
 include 'print_var.php';
 
+/*  disable all print_var  */
+// define('DISABLE_PRINT_VAR', true);
+
 /*  print with maximized array and object values  */
 print_var($arr);
 

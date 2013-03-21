@@ -601,6 +601,8 @@ class PrintVarService{
     }
 
     public static function PrintVar($var, $closed=true){
+        if(defined('DISABLE_PRINT_VAR')) return;
+
         self::$closed = $closed;
 
         print '<link rel="stylesheet" type="text/css" href="' . self::jQueryUIThemeSource . '">';
