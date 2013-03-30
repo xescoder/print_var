@@ -269,13 +269,19 @@ class PrintVarService{
     }
 
     private function PrintStyle(){
-        $style = '<style type="text/css">' . $this->settings->GetStyle() . '</style>';
-        print preg_replace('/[\s]{2,}/', ' ', $style);
+        $style = $this->settings->GetStyle();
+        $style = preg_replace('/[\s]{2,}/', ' ', $style);
+        $style = preg_replace('/\/\*[^\*\/]*\*\//', '', $style);
+        $style = trim($style);
+        print '<style type="text/css">' . $style . '</style>';
     }
 
     private function PrintScript(){
-        $script = '<script type="text/javascript">' . $this->settings->GetScript() . '</script>';
-        print preg_replace('/[\s]{2,}/', ' ', $script);
+        $script = $this->settings->GetScript();
+        $script = preg_replace('/[\s]{2,}/', ' ', $script);
+        $script = preg_replace('/\/\*[^\*\/]*\*\//', '', $script);
+        $script = trim($script);
+        print '<script type="text/javascript">' . $script . '</script>';
     }
 
     private function PrintButton(){
