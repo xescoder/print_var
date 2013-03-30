@@ -19,8 +19,10 @@ include 'print_var.php';
 /*  disable all print_var  */
 // define('DISABLE_PRINT_VAR', true);
 
-/*  print with maximized array and object values  */
-print_var($arr);
+/* customize print_var settings */
+$printVarSettings = new PrintVarSettings();
+$printVarSettings->useJS = false;
+// print_var_settings($printVarSettings);
 
-/*  print with minimized array and object values  */
-// print_var($arr, true);
+/*  print variable  */
+print_var($arr);
