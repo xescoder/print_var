@@ -183,7 +183,7 @@ class PrintVarSettings{
         return '
             (function( $ ){
                 $(function(){
-                    var container = $("#print_var_container");
+                    var container = $(".print_var_container");
 
                     container.removeClass("no_js");
 
@@ -488,7 +488,7 @@ class PrintVarService{
     public function PrintVar($var){
         if(defined('DISABLE_PRINT_VAR')) return;
 
-        print '<div id="print_var_container" class="no_js" title="Print Var">';
+        print '<div id="print_var_container" class="print_var_container no_js" title="Print Var">';
         self::PrintValue($var, null, null, null);
         print '</div>';
     }
