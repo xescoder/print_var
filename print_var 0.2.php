@@ -28,6 +28,12 @@ class PrintVarSettings{
     public $useJS = true;
     public $minimize = false;
 
+    public $arMethodsExcept = array(
+        __construct,
+        __get,
+        __set,
+    );
+
     public function GetStyle(){
         return '
             /* Style reset */
@@ -387,16 +393,19 @@ class PrintVarSettings{
 class PrintVarService{
     private static $service = null;
 
-    public static function Init($settings=null){
+    public static function Init(PrintVarSettings $settings=null){
         if(!self::$service || $settings) $service = new PrintVarService($settings);
         return $service;
     }
 
-
+    /**
+     * @var PrintVarSettings
+     */
     private $settings;
 
     private function __construct($settings){
         $this->SetSettings($settings);
+        $this->PrintHead();
     }
 
     private function SetSettings($settings){
@@ -407,7 +416,230 @@ class PrintVarService{
         }
     }
 
-    public function PrintVar($var, $closed){
+    private function PrintHead(){
+        print '<link rel="stylesheet" type="text/css" href="' . $this->settings->jQueryUIThemeSource . '">';
+        $this->PrintStyle();
 
+        if(!$this->settings->useJS) return;
+
+        print '<script type="text/javascript" src="' . $this->settings->jQuerySource . '"></script>';
+        print '<script type="text/javascript" src="' . $this->settings->jQueryUISource . '"></script>';
+        $this->PrintScript();
+    }
+
+    private function PrintStyle(){
+        $style = '<style type="text/css">' . $this->settings->GetStyle() . '</style>';
+        print preg_replace('/[\s]{2,}/', ' ', $style);
+    }
+
+    private function PrintScript(){
+        $script = '<script type="text/javascript">' . $this->settings->GetScript() . '</script>';
+        print preg_replace('/[\s]{2,}/', ' ', $script);
+    }
+
+    private function PrintButton(){
+        print '<div class="button ' . ($this->settings->minimize ? 'open' : 'close') . '">' . ($this->settings->minimize ? '+' : '-') . '</div>';
+    }
+
+    private function PrintType($type){
+        print '<span class="type ' . $type . '">(';
+        print $type;
+        print ')</span>';
+    }
+
+    private function PrintName($name, $prefix=null){
+        if(is_null($name)) return;
+        print '<span class="name">';
+
+        if($prefix) print $prefix;
+
+        if($name === 0) print '0';
+        else if($name === false) print 'false';
+        else if($name === '') print '""';
+        else print $name;
+
+        print '</span>';
+    }
+
+    private function PrintSeparator($separator='='){
+        if(empty($separator)) return;
+
+        print '<span class="separator">';
+        print $separator;
+        print '</span>';
+    }
+
+    private function PrintValue($var, $name=null, $separator='=', $namePrefix=null){
+        if(is_null($var)){
+            $this->PrintName($name, $namePrefix);
+            $this->PrintSeparator($separator);
+            $this->PrintNull($var);
+            return;
+        }
+
+        if(is_bool($var)){
+            $this->PrintName($name, $namePrefix);
+            $this->PrintSeparator($separator);
+            $this->PrintType('bool');
+            $this->PrintBool($var);
+            return;
+        }
+
+        if(is_integer($var)){
+            $this->PrintName($name, $namePrefix);
+            $this->PrintSeparator($separator);
+            $this->PrintType('int');
+            $this->PrintInteger($var);
+            return;
+        }
+
+        if(is_float($var)){
+            $this->PrintName($name, $namePrefix);
+            $this->PrintSeparator($separator);
+            $this->PrintType('float');
+            $this->PrintFloat($var);
+            return;
+        }
+
+        if(is_string($var)){
+            $this->PrintName($name, $namePrefix);
+            $this->PrintSeparator($separator);
+            $this->PrintType('string');
+            $this->PrintString($var);
+            return;
+        }
+
+        if(is_array($var)){
+            $this->PrintButton();
+            $this->PrintName($name, $namePrefix);
+            $this->PrintSeparator($separator);
+            $this->PrintType('array');
+            $this->PrintArray($var);
+            return;
+        }
+
+        if(is_object($var)){
+            $this->PrintButton();
+            $this->PrintObject($var, $name, $separator, $namePrefix);
+            return;
+        }
+    }
+
+    private function PrintNull($var){
+
+        print '<span class="value null">null</span>';
+    }
+
+    private function PrintBool($var){
+        print '<span class="value bool">';
+        print $var ? 'true' : 'false';
+        print '</span>';
+    }
+
+    private function PrintInteger($var){
+        print '<span class="value int">';
+        print $var ? $var : 0;
+        print '</span>';
+    }
+
+    private function PrintFloat($var){
+        print '<span class="value float">';
+        print $var ? $var : 0;
+        print '</span>';
+    }
+
+    private function PrintString($var){
+        print '<span class="value string">"';
+        print $var ? $var : '';
+        print '"</span>';
+    }
+
+    private function PrintArray($var){
+        print '<span class="count array">[' . count($var) . ']</span>';
+        print '<span class="value">';
+        print '<ul' . ($this->settings->minimize ? ' style="display: none;"' : '') . '>';
+
+        foreach($var as $key=>$value){
+            print '<li>';
+            $this->PrintValue($value, $key, '=>');
+            print '</li>';
+        }
+
+        print '</ul></span>';
+    }
+
+    private function PrintObject($var, $name=null, $separator='=', $namePrefix=null){
+        $this->PrintName($name, $namePrefix);
+        $this->PrintSeparator($separator);
+
+        $className = get_class($var);
+
+        $reflect = new ReflectionClass($var);
+        $props = $reflect->getProperties(ReflectionProperty::IS_PUBLIC);
+        $methods = $reflect->getMethods(ReflectionMethod::IS_PUBLIC);
+
+        print '<span class="type object">' . $className . '</span>';
+
+        $countProps = 0;
+        foreach($props as $prop){
+            if($prop->isStatic()) continue;
+            $countProps++;
+        }
+
+        print '<span class="count object">{' . $countProps . '}</span>';
+        print '<span class="value">';
+        print '<ul' . ($this->settings->minimize ? ' style="display: none;"' : '') . '>';
+
+        foreach($props as $prop){
+            if($prop->isStatic()) continue;
+
+            print '<li>';
+            $this->PrintValue($prop->getValue($var), $prop->getName(), '=');
+            print '</li>';
+        }
+
+        foreach($methods as $method){
+            if($method->isStatic()) continue;
+
+            $name = $method->getName();
+
+            if(in_array($name, $this->settings->arMethodsExcept)) continue;
+
+            print '<li>';
+            $this->PrintButton();
+            print '<span class="name">' . $name . '</span>';
+
+            $params = $method->getParameters();
+
+            print '<span class="count method">(' . count($params) . ')</span>';
+            print '<span class="value">';
+            print '<ul' . ($this->settings->minimize ? ' style="display: none;"' : '') . '>';
+
+            foreach($params as $param){
+                $name = $param->getName();
+
+                print '<li>';
+                if($param->isDefaultValueAvailable())
+                {
+                    $default = $param->getDefaultValue();
+                    $this->PrintValue($default, $name, '=', '$');
+                } else {
+                    $this->PrintName($name, '$');
+                }
+                print '</li>';
+            }
+
+            print '</ul></span>';
+        }
+
+        print '</ul></span>';
+    }
+
+    public function PrintVar($var){
+        if(defined('DISABLE_PRINT_VAR')) return;
+
+        print '<div id="print_var_container" class="no_js" title="Print Var">';
+        self::PrintValue($var, null, null, null);
+        print '</div>';
     }
 }
