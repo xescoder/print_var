@@ -167,8 +167,8 @@ class PrintVarSettings{
                 padding-left: 25px;
                 background-color: white;
                 border: 2px solid black;
-                top: 0px;
-                left 0px;
+                top: 40%;
+                left: 40%;
                 width: auto;
                 height: auto;
             }
