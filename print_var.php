@@ -235,8 +235,10 @@ class PrintVarService{
     private static $service = null;
 
     public static function Init(PrintVarSettings $settings=null){
-        if(!self::$service || $settings) $service = new PrintVarService($settings);
-        return $service;
+        if(!self::$service || isset($settings))
+            self::$service = new PrintVarService($settings);
+
+        return self::$service;
     }
 
     /**
@@ -245,12 +247,13 @@ class PrintVarService{
     private $settings;
 
     private function __construct($settings){
+
         $this->SetSettings($settings);
         $this->PrintHead();
     }
 
     private function SetSettings($settings){
-        if($settings){
+        if(isset($settings)){
             $this->settings = $settings;
         } else {
             $this->settings = new PrintVarSettings();
