@@ -1,5 +1,21 @@
 <?php
 
+class TestObject{
+    private $prField = 'private';
+
+    public $field1 = 1;
+    public $field2 = true;
+    public $field3 = 2;
+
+    public function Method1($param1=null, $param2='str', $param3=12.34){
+
+    }
+
+    public function Method2($param1, $param2){
+
+    }
+}
+
 /*  variable  */
 $arr = array(
     'null' => null,
@@ -10,7 +26,8 @@ $arr = array(
     'array' => array(
         'ints' => array(1, 2, 3, 4, 5, 6),
         'strings' => array('one', 'two', 'three', 'four'),
-    )
+    ),
+    'object' => new TestObject()
 );
 
 /*  include print_var tool  */
