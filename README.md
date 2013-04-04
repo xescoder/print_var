@@ -18,7 +18,21 @@ Print Var
 1.  Подключить print_var.php где-нибудь в начале страницы,
 2.  Вызвать print_var($var).
 
+`````php
+// Подключить print_var
+include 'print_var.php';
+
+// Вызвать функцию
+$str = 'variable';
+print_var($str);
+`````
+
 Деактивация
 -----------
 
 Для деактивации всех вызовов print_var достаточно в начале страницы определить константу DISABLE_PRINT_VAR
+
+`````php
+// Деактивация print_var
+define('DISABLE_PRINT_VAR', true);
+`````
