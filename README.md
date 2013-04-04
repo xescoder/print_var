@@ -3,4 +3,4 @@ print_var
 
 Printing variables in php
 
-![Скриншот](https://github.com/xescoder/print_var/img.jpg)
+![Скриншот](/xescoder/print_var/blob/master/img.jpg)
