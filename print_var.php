@@ -5,7 +5,20 @@
  * @param mixed $var
  */
 function print_var($var){
-    PrintVarService::Init()->PrintVar($var);
+    $traces = debug_backtrace();
+    $title = null;
+
+    $file = '';
+    $line = '';
+
+    foreach($traces as $trace){
+        if($trace['function'] == 'print_var'){
+            $title = ($trace['file'] ? $trace['file'] : 'Print Var') . ($trace['line'] ? ': ' . $trace['line'] : '');
+            break;
+        }
+    }
+
+    PrintVarService::Init()->PrintVar($var, $title);
 }
 
 /**
@@ -29,9 +42,9 @@ class PrintVarSettings{
     public $minimize = false;
 
     public $arMethodsExcept = array(
-        __construct,
-        __get,
-        __set,
+        '__construct',
+        '__get',
+        '__set',
     );
 
     public function GetStyle(){
@@ -485,11 +498,13 @@ class PrintVarService{
         print '</ul></span>';
     }
 
-    public function PrintVar($var){
+    public function PrintVar($var, $title=null){
         if(defined('DISABLE_PRINT_VAR')) return;
 
-        print '<div id="print_var_container" class="print_var_container no_js" title="Print Var">';
-        self::PrintValue($var, null, null, null);
+        if(!$title) $title = 'Print Var';
+
+        print '<div id="print_var_container" class="print_var_container no_js" title="'.$title.'">';
+        $this->PrintValue($var, null, null, null);
         print '</div>';
     }
 }

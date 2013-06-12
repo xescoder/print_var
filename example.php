@@ -37,9 +37,9 @@ include 'print_var.php';
 // define('DISABLE_PRINT_VAR', true);
 
 /* customize print_var settings */
-$printVarSettings = new PrintVarSettings();
-$printVarSettings->useJS = false;
-// print_var_settings($printVarSettings);
+//$printVarSettings = new PrintVarSettings();
+//$printVarSettings->useJS = true;
+//print_var_settings($printVarSettings);
 
 /*  print variable  */
 print_var($arr);
