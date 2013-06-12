@@ -92,7 +92,7 @@ class PrintVarSettings{
                 background-color: #e6e6e6;
                 color: #000000;
                 width: 15px;
-                height: 15px;
+                height: 17px;
                 float: left;
                 margin: 0;
                 margin-left: -20px;
@@ -105,17 +105,15 @@ class PrintVarSettings{
             }
 
             #print_var_container .close {
+                padding: 0;
                 padding-left: 3px;
-                padding-bottom: 2px;
-                padding-right: 0px;
-                padding-top: 0px;
+                line-height: 14px;
             }
 
             #print_var_container .open {
-                padding-left: 3px;
-                padding-bottom: 3px;
-                padding-right: 0px;
-                padding-top: 0px;
+                padding: 0px;
+                padding-left: 4px;
+                line-height: 17px;
             }
 
             #print_var_container i {
