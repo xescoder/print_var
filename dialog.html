@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <style type="text/css">
+            /* Style reset */
+            #print_var_container div,
+            #print_var_container li,
+            #print_var_container span,
+            #print_var_container ul{
+                border: 0;
+                margin: 0;
+                padding: 0;
+                font-size: 100%;
+            }
+
+            #print_var_container ul {
+                list-style: none;
+            }
+
+            #print_var_container li {
+                display: list-item;
+            }
+
+            /* With JS */
+            #print_var_container {
+                font-family: Courier;
+                overflow: auto;
+                background-color: white;
+                padding-left: 25px;
+                width: 200px;
+                height: 50px;
+            }
+
+            #print_var_container ul {
+                overflow: visible;
+                list-style-type: none;
+                display: block;
+                margin: 0 0 8px  -13px;
+                padding: 0 0 0 45px;
+                border-left: rgb(226, 226, 226) 1px dotted;
+            }
+
+            #print_var_container .button {
+                background-color: rgb(200, 200, 200);
+                color: #fff;
+                float: left;
+                margin: 2px 0 0 -20px;
+                font-family: Times Mew Roman, serif;
+                text-align: center;
+            }
+
+            #print_var_container .button:hover {
+                background-color: rgb(190,190, 190);
+            }
+
+            #print_var_container i {
+                display: block;
+                margin: 4px;
+                width: 0px;
+                height: 0px;
+                border-style: solid;
+            }
+
+            #print_var_container .name {
+                color: #66170D;
+                padding-right: 5px;
+            }
+
+            #print_var_container .separator {
+                color: #000000;
+                padding-right: 5px;
+            }
+
+            #print_var_container .count {
+                color: #000000;
+            }
+
+            #print_var_container .null {
+                color: #0A1F80;
+            }
+
+            #print_var_container .bool {
+                color: #0A1F80;
+            }
+
+            #print_var_container .int {
+                color: #1F45F7;
+            }
+
+            #print_var_container .float {
+                color: #1F45F7;
+            }
+
+            #print_var_container .string {
+                color: #3C811B;
+            }
+
+            #print_var_container .array {
+                color: #0A1F80;
+            }
+
+            #print_var_container .object {
+                color: #000000;
+            }
+
+            #print_var_container .method {
+                color: #000000;
+            }
+
+            /* No JS */
+            #print_var_container.no_js {
+                position: absolute;
+                z-index: 1000000000;
+                padding: 20px;
+                padding-left: 25px;
+                background-color: white;
+                border: 2px solid black;
+                top: 40%;
+                left: 40%;
+                width: auto;
+                height: auto;
+            }
+
+            #print_var_container.no_js .button {
+                display: none;
+            }
+        </style>
+        <style type="text/css">
+            .print-var-modal {
+                border: 1px solid rgb(221, 221, 221);
+                border-radius: 10px;
+                overflow-x: visible;
+                position: fixed;
+                z-index: 999999999;
+                box-shadow: 0 0 7px rgb(230, 230, 230);
+                padding-bottom: 10px;
+            }
+
+            .print-var-modal .head {
+                border-radius: 10px 10px 0 0;
+                background-color: rgb(240, 240, 240);
+                padding: 10px;
+                font-family: Arial;
+                position: relative;
+                cursor: move;
+            }
+
+            .print-var-modal .head span{
+                font-size: 1.1em;
+                font-weight: bolder;
+                color: #2d2d2d;
+                text-shadow: 1px 1px 2px rgb(180, 180, 180);
+            }
+
+            .print-var-modal .head p{
+                font-size: 0.9em;
+                margin: 5px 0 3px;
+            }
+
+            .print-var-modal .button {
+                text-align: center;
+                font-family: Arial;
+                font-size: 1em;
+                line-height: 0.9em;
+                float: right;
+                width: 0.9em;
+                border-radius: 10px;
+                margin-left: 5px;
+                cursor: pointer;
+            }
+
+            .print-var-modal .button:hover{
+                background-color: rgb(160, 160, 160);
+            }
+
+            .print-var-modal .modal-close, .print-var-modal .min{
+                font-size: 1.1em;
+                width: 1.1em;
+                line-height: 1.1em;
+                position: absolute;
+                top: 8px;
+                right: 8px;
+                background-color: rgb(170, 170, 170);
+                color: #fff;
+            }
+
+            .print-var-modal .min{
+                right: 35px;
+            }
+
+            .print-var-modal .body {
+                overflow: visible;
+                overflow-y: auto;
+                height: 400px;
+                padding: 10px 10px 0 10px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="print-var-modal">
+            <div class="head">
+                <span>PrintVar</span>
+                <p>/Users/xescoder/Sites/print_var/example.php: 45</p>
+                <a class="button modal-close">x</a>
+                <a class="button min">-</a>
+            </div>
+            <div class="body">
+
+                <div id="print_var_container" class="print_var_container ui-dialog-content ui-widget-content" style="width: auto; min-height: 0px; max-height: none; height: auto;"><div class="button close">-</div><span class="type array">(array)</span><span class="count array">[7]</span><span class="value"><ul><li><span class="name">null</span><span class="separator">=&gt;</span><span class="value null">null</span></li><li><span class="name">bool</span><span class="separator">=&gt;</span><span class="type bool">(bool)</span><span class="value bool">true</span></li><li><span class="name">int</span><span class="separator">=&gt;</span><span class="type int">(int)</span><span class="value int">1234</span></li><li><span class="name">float</span><span class="separator">=&gt;</span><span class="type float">(float)</span><span class="value float">56.1111</span></li><li><span class="name">string</span><span class="separator">=&gt;</span><span class="type string">(string)</span><span class="value string">"string string string"</span></li><li><div class="button close">-</div><span class="name">array</span><span class="separator">=&gt;</span><span class="type array">(array)</span><span class="count array">[2]</span><span class="value"><ul><li><div class="button close">-</div><span class="name">ints</span><span class="separator">=&gt;</span><span class="type array">(array)</span><span class="count array">[6]</span><span class="value"><ul><li><span class="name">0</span><span class="separator">=&gt;</span><span class="type int">(int)</span><span class="value int">1</span></li><li><span class="name">1</span><span class="separator">=&gt;</span><span class="type int">(int)</span><span class="value int">2</span></li><li><span class="name">2</span><span class="separator">=&gt;</span><span class="type int">(int)</span><span class="value int">3</span></li><li><span class="name">3</span><span class="separator">=&gt;</span><span class="type int">(int)</span><span class="value int">4</span></li><li><span class="name">4</span><span class="separator">=&gt;</span><span class="type int">(int)</span><span class="value int">5</span></li><li><span class="name">5</span><span class="separator">=&gt;</span><span class="type int">(int)</span><span class="value int">6</span></li></ul></span></li><li><div class="button close">-</div><span class="name">strings</span><span class="separator">=&gt;</span><span class="type array">(array)</span><span class="count array">[4]</span><span class="value"><ul><li><span class="name">0</span><span class="separator">=&gt;</span><span class="type string">(string)</span><span class="value string">"one"</span></li><li><span class="name">1</span><span class="separator">=&gt;</span><span class="type string">(string)</span><span class="value string">"two"</span></li><li><span class="name">2</span><span class="separator">=&gt;</span><span class="type string">(string)</span><span class="value string">"three"</span></li><li><span class="name">3</span><span class="separator">=&gt;</span><span class="type string">(string)</span><span class="value string">"four"</span></li></ul></span></li></ul></span></li><li><div class="button close">-</div><span class="name">object</span><span class="separator">=&gt;</span><span class="type object">TestObject</span><span class="count object">{3}</span><span class="value"><ul><li><span class="name">field1</span><span class="separator">=</span><span class="type int">(int)</span><span class="value int">1</span></li><li><span class="name">field2</span><span class="separator">=</span><span class="type bool">(bool)</span><span class="value bool">true</span></li><li><span class="name">field3</span><span class="separator">=</span><span class="type int">(int)</span><span class="value int">2</span></li><li><div class="button close">-</div><span class="name">Method1</span><span class="count method">(3)</span><span class="value"><ul><li><span class="name">$param1</span><span class="separator">=</span><span class="value null">null</span></li><li><span class="name">$param2</span><span class="separator">=</span><span class="type string">(string)</span><span class="value string">"str"</span></li><li><span class="name">$param3</span><span class="separator">=</span><span class="type float">(float)</span><span class="value float">12.34</span></li></ul></span></li><li><div class="button close">-</div><span class="name">Method2</span><span class="count method">(2)</span><span class="value"><ul><li><span class="name">$param1</span></li><li><span class="name">$param2</span></li></ul></span></li></ul></span></li></ul></span></div>
+
+            </div>
+        </div>
+    </body>
+</html>
