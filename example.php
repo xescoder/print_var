@@ -22,8 +22,16 @@ $arr = array(
     'bool' => true,
     'int' => 1234,
     'float' => 56.1111,
-    'string' => 'string string string',
-    'array' => array(
+    'string' => 'string string string string string string string string string string string',
+    'array1' => array(
+        'ints' => array(1, 2, 3, 4, 5, 6),
+        'strings' => array('one', 'two', 'three', 'four'),
+    ),
+    'array2' => array(
+        'ints' => array(1, 2, 3, 4, 5, 6),
+        'strings' => array('one', 'two', 'three', 'four'),
+    ),
+    'array3' => array(
         'ints' => array(1, 2, 3, 4, 5, 6),
         'strings' => array('one', 'two', 'three', 'four'),
     ),
