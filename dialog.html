@@ -5,25 +5,95 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <style type="text/css">
             /* Style reset */
-            #print_var_container div,
-            #print_var_container li,
-            #print_var_container span,
-            #print_var_container ul{
+            #print-var-modal div,
+            #print-var-modal li,
+            #print-var-modal span,
+            #print-var-modal ul{
                 border: 0;
                 margin: 0;
                 padding: 0;
                 font-size: 100%;
             }
 
-            #print_var_container ul {
+            #print-var-modal ul {
                 list-style: none;
             }
 
-            #print_var_container li {
+            #print-var-modal li {
                 display: list-item;
             }
 
-            /* With JS */
+            /* Styles */
+            #print-var-modal {
+                border: 1px solid rgb(221, 221, 221);
+                border-radius: 10px;
+                overflow-x: visible;
+                position: fixed;
+                z-index: 999999999;
+                box-shadow: 0 0 7px rgb(230, 230, 230);
+                padding-bottom: 10px;
+                max-width: 900px;
+            }
+
+            #print-var-modal .head {
+                border-radius: 10px 10px 0 0;
+                background-color: rgb(240, 240, 240);
+                padding: 10px;
+                font-family: Arial;
+                position: relative;
+                cursor: move;
+            }
+
+            #print-var-modal .head span{
+                font-size: 1.1em;
+                font-weight: bolder;
+                color: #2d2d2d;
+                text-shadow: 1px 1px 2px rgb(180, 180, 180);
+            }
+
+            #print-var-modal .head p{
+                font-size: 0.9em;
+                margin: 5px 0 3px;
+            }
+
+            #print-var-modal .button {
+                text-align: center;
+                font-family: Arial;
+                font-size: 1em;
+                line-height: 0.9em;
+                float: right;
+                width: 0.9em;
+                border-radius: 10px;
+                margin-left: 5px;
+                cursor: pointer;
+            }
+
+            #print-var-modal .button:hover{
+                background-color: rgb(160, 160, 160);
+            }
+
+            #print-var-modal .modal-close, #print-var-modal .min{
+                font-size: 1.1em;
+                width: 1.1em;
+                line-height: 1.1em;
+                position: absolute;
+                top: 8px;
+                right: 8px;
+                background-color: rgb(170, 170, 170);
+                color: #fff;
+            }
+
+            #print-var-modal .min{
+                right: 35px;
+            }
+
+            #print-var-modal .body {
+                overflow: visible;
+                overflow-y: auto;
+                height: 400px;
+                padding: 10px 10px 0 10px;
+            }
+
             #print_var_container {
                 font-family: Courier;
                 overflow: auto;
@@ -111,77 +181,6 @@
                 color: #000000;
             }
         </style>
-        <style type="text/css">
-            .print-var-modal {
-                border: 1px solid rgb(221, 221, 221);
-                border-radius: 10px;
-                overflow-x: visible;
-                position: fixed;
-                z-index: 999999999;
-                box-shadow: 0 0 7px rgb(230, 230, 230);
-                padding-bottom: 10px;
-                max-width: 900px;
-            }
-
-            .print-var-modal .head {
-                border-radius: 10px 10px 0 0;
-                background-color: rgb(240, 240, 240);
-                padding: 10px;
-                font-family: Arial;
-                position: relative;
-                cursor: move;
-            }
-
-            .print-var-modal .head span{
-                font-size: 1.1em;
-                font-weight: bolder;
-                color: #2d2d2d;
-                text-shadow: 1px 1px 2px rgb(180, 180, 180);
-            }
-
-            .print-var-modal .head p{
-                font-size: 0.9em;
-                margin: 5px 0 3px;
-            }
-
-            .print-var-modal .button {
-                text-align: center;
-                font-family: Arial;
-                font-size: 1em;
-                line-height: 0.9em;
-                float: right;
-                width: 0.9em;
-                border-radius: 10px;
-                margin-left: 5px;
-                cursor: pointer;
-            }
-
-            .print-var-modal .button:hover{
-                background-color: rgb(160, 160, 160);
-            }
-
-            .print-var-modal .modal-close, .print-var-modal .min{
-                font-size: 1.1em;
-                width: 1.1em;
-                line-height: 1.1em;
-                position: absolute;
-                top: 8px;
-                right: 8px;
-                background-color: rgb(170, 170, 170);
-                color: #fff;
-            }
-
-            .print-var-modal .min{
-                right: 35px;
-            }
-
-            .print-var-modal .body {
-                overflow: visible;
-                overflow-y: auto;
-                height: 400px;
-                padding: 10px 10px 0 10px;
-            }
-        </style>
 
         <script>
             (function(undefined){
@@ -238,10 +237,6 @@
                     jQueryCode(window.jQuery);
                 }
             })();
-
-
-
-
         </script>
     </head>
     <body>
