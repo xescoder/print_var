@@ -7,11 +7,11 @@ class TestObject{
     public $field2 = true;
     public $field3 = 2;
 
-    public function Method1($param1=null, $param2='str', $param3=12.34){
+    public function Function1($param1, $param2='str', $param3=12.34){
 
     }
 
-    public function Method2($param1, $param2){
+    public function Function2($param1, $param2){
 
     }
 }
