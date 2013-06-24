@@ -22,98 +22,160 @@ function print_var($var){
 }
 
 /**
- * Set settings print_var
- * @param PrintVarSettings $settings
+ * Service print_var
+ * Class PrintVarService
  */
-function print_var_settings(PrintVarSettings $settings){
-    PrintVarService::Init($settings);
-}
+class PrintVarService{
+    private static $service = null;
 
-/**
- * Settings print_var
- * Class PrintVarSettings
- */
-class PrintVarSettings{
-    public $jQuerySource = 'http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js';
-    public $jQueryUISource = 'http://code.jquery.com/ui/1.10.2/jquery-ui.js';
-    public $jQueryUIThemeSource = 'http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css';
+    public static function Init(){
+        if(!self::$service) self::$service = new PrintVarService();
+        return self::$service;
+    }
 
-    public $useJS = true;
-    public $minimize = false;
-
-    public $arMethodsExcept = array(
+    private $arMethodsExcept = array(
         '__construct',
         '__get',
         '__set',
     );
 
-    public function GetStyle(){
+    private function __construct(){
+        $this->PrintHead();
+    }
+
+    private function PrintHead(){
+        $this->PrintStyle();
+        $this->PrintScript();
+    }
+
+    private function GetStyle(){
         return '
             /* Style reset */
-            #print_var_container div,
-            #print_var_container li,
-            #print_var_container span,
-            #print_var_container ul{
-              border: 0;
-              margin: 0;
-              padding: 0;
-              font-size: 100%;
+            #print-var-modal div,
+            #print-var-modal li,
+            #print-var-modal span,
+            #print-var-modal ul{
+                border: 0;
+                margin: 0;
+                padding: 0;
+                font-size: 100%;
             }
 
-            #print_var_container ul {
-              list-style: none;
+            #print-var-modal ul {
+                list-style: none;
             }
 
-            #print_var_container li {
-              display: list-item;
+            #print-var-modal li {
+                display: list-item;
             }
 
-            /* With JS */
+            /* Styles */
+            #print-var-modal {
+                border: 1px solid rgb(221, 221, 221);
+                border-radius: 10px;
+                overflow-x: visible;
+                position: fixed;
+                z-index: 999999999;
+                box-shadow: 0 0 7px rgb(230, 230, 230);
+                padding-bottom: 10px;
+                max-width: 900px;
+            }
+
+            #print-var-modal .head {
+                border-radius: 10px 10px 0 0;
+                background-color: rgb(240, 240, 240);
+                padding: 10px;
+                font-family: Arial;
+                position: relative;
+                cursor: default;
+                -moz-user-select: none;
+                -khtml-user-select: none;
+                -webkit-user-select: none;
+                -o-user-select: none;
+                user-select: none;
+            }
+
+            #print-var-modal .head span{
+                font-size: 1.1em;
+                font-weight: bolder;
+                color: #2d2d2d;
+                text-shadow: 1px 1px 2px rgb(180, 180, 180);
+            }
+
+            #print-var-modal .head p{
+                font-size: 0.9em;
+                margin: 5px 0 3px;
+            }
+
+            #print-var-modal .button {
+                text-align: center;
+                font-family: Arial;
+                font-size: 1em;
+                line-height: 0.9em;
+                float: right;
+                width: 0.9em;
+                border-radius: 10px;
+                margin-left: 5px;
+                cursor: pointer;
+            }
+
+            #print-var-modal .button:hover{
+                background-color: rgb(160, 160, 160);
+            }
+
+            #print-var-modal .modal-close, #print-var-modal .min, #print-var-modal .max{
+                font-size: 1.1em;
+                width: 1.1em;
+                line-height: 1.1em;
+                position: absolute;
+                top: 8px;
+                right: 8px;
+                background-color: rgb(170, 170, 170);
+                color: #fff;
+            }
+
+            #print-var-modal .min, #print-var-modal .max{
+                right: 35px;
+            }
+
+            #print-var-modal .body {
+                overflow: visible;
+                overflow-y: auto;
+                height: 400px;
+                padding: 10px 10px 0 10px;
+            }
+
             #print_var_container {
                 font-family: Courier;
                 overflow: auto;
                 background-color: white;
                 padding-left: 25px;
-                width: 200px;
-                height: 50px;
+                width: auto;
+                min-height: 0px;
+                max-height: none;
+                height: auto;
             }
 
             #print_var_container ul {
                 overflow: visible;
                 list-style-type: none;
                 display: block;
-                margin: 0;
-                padding: 0;
-                padding-left: 30px;
-                border-left: #c5c5c5 1px solid;
+                margin: 0 0 8px  -13px;
+                padding: 0 0 0 45px;
+                border-left: rgb(226, 226, 226) 1px dotted;
             }
 
             #print_var_container .button {
-                background-color: #e6e6e6;
-                color: #000000;
-                width: 15px;
-                height: 17px;
+                background-color: rgb(200, 200, 200);
+                color: #fff;
                 float: left;
-                margin: 0;
-                margin-left: -20px;
-                border-radius: 4px;
-                cursor: hand;
+                margin: 2px 0 0 -20px;
+                font-family: Times Mew Roman, serif;
+                text-align: center;
             }
 
             #print_var_container .button:hover {
-                background-color: #bebebe;
-            }
-
-            #print_var_container .close {
-                padding: 0;
-                padding-left: 3px;
-                line-height: 14px;
-            }
-
-            #print_var_container .open {
-                padding: 0px;
-                padding-left: 4px;
-                line-height: 17px;
+                background-color: rgb(190,190, 190);
             }
 
             #print_var_container i {
@@ -169,121 +231,153 @@ class PrintVarSettings{
             #print_var_container .method {
                 color: #000000;
             }
-
-            /* No JS */
-            #print_var_container.no_js {
-                position: absolute;
-                z-index: 10000000000000;
-                padding: 20px;
-                padding-left: 25px;
-                background-color: white;
-                border: 2px solid black;
-                top: 40%;
-                left: 40%;
-                width: auto;
-                height: auto;
-            }
-
-            #print_var_container.no_js .button {
-                display: none;
-            }
         ';
     }
 
-    public function GetScript(){
+    private function GetScript(){
         return '
-            (function( $ ){
-                $(function(){
-                    var container = $(".print_var_container");
+            (function(undefined){
+                var jQuerySource = "http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js";
 
-                    container.removeClass("no_js");
+                var jQueryCode = function($){
+                    $(function(){
+                        var container = $(".print-var-modal");
 
-                    container.dialog({
-                        autoOpen: true,
-                        draggable: true,
-                        resizable: true,
-                        minHeight: 50,
-                        minWidth: 300,
-                        width: "auto"
+                        var position = function(container){
+                            container.each(function(){
+                                var c = $(this);
+                                var cw = c.width();
+                                var ch = c.height();
+
+                                var w = $(window);
+                                var ww = w.width();
+                                var wh = w.height();
+
+                                c.css({
+                                   top: ((wh - ch)/2) + "px",
+                                   left: ((ww - cw)/2) + "px"
+                                });
+                            });
+                        };
+
+                        container.appendTo("body").fadeIn();
+                        position(container);
+
+                        var head =  container.find(".head");
+                        var current = null;
+                        var delta = null;
+
+                        head.mousedown(function(e){
+                            var _this = $(this);
+                            _this.css("cursor", "move");
+                            current = _this.closest(".print-var-modal");
+                            delta = current.offset();
+                            delta.top -= e.pageY;
+                            delta.left -= e.pageX;
+                        });
+                        head.bind("mouseup mouseleave", function(){
+                            var _this = $(this);
+                            _this.css("cursor", "default");
+                            current = null;
+                        });
+                        $("body").mousemove(function(e){
+                            if(current){
+                                current.css({
+                                    top:  (e.pageY + delta.top)+"px",
+                                    left: (e.pageX + delta.left)+"px",
+                                });
+
+                                current.find(".head").css("cursor", "move");
+                            }
+                        });
+
+                        container.find(".button").click(function(e){
+                            e.preventDefault();
+                            var _this = $(this);
+
+                            if(_this.hasClass("close")){
+                                _this.text("+")
+                                     .removeClass("close")
+                                     .addClass("open")
+                                     .parent()
+                                     .find("ul")
+                                     .slideUp(200)
+                                     .find(".button")
+                                     .text("+")
+                                     .removeClass("close")
+                                     .addClass("open");
+                                return false;
+                            }
+
+                            if(_this.hasClass("open")){
+                                _this.text("-")
+                                     .removeClass("open")
+                                     .addClass("close")
+                                     .parent()
+                                     .find("> span > ul")
+                                     .slideDown(200);
+                                return false;
+                            }
+
+                            if(_this.hasClass("min")){
+                                _this.text("+")
+                                     .removeClass("min")
+                                     .addClass("max");
+
+                                container.find(".head")
+                                         .css("border-radius", "10px");
+
+                                container.css("padding-bottom", "0")
+                                         .find(".body")
+                                         .slideUp();
+                                return false;
+                            }
+
+                            if(_this.hasClass("max")){
+                                _this.text("-")
+                                     .removeClass("max")
+                                     .addClass("min");
+
+                                container.find(".head")
+                                         .css("border-radius", "10px 10px 0 0");
+
+                                container.css("padding-bottom", "10px")
+                                         .find(".body")
+                                         .slideDown();
+                                return false;
+                            }
+
+                            if(_this.hasClass("modal-close")){
+                                container.fadeOut();
+                                return false;
+                            }
+                        });
                     });
+                };
 
-                    container.closest(".ui-dialog").css({zIndex: 1000000000});
+                if(window.jQuery == undefined){
+                    var script = document.createElement("script");
+                    script.src = jQuerySource;
+                    script.type = "text/javascript";
 
-                    container.find(".button").click(function(){
-                        var _this = $(this);
-                        if(_this.hasClass("close")){
-                            _this.text("+")
-                                 .removeClass("close")
-                                 .addClass("open")
-                                 .parent()
-                                 .find("ul")
-                                 .slideUp(200)
-                                 .find(".button")
-                                 .text("+")
-                                 .removeClass("close")
-                                 .addClass("open");
-                        } else {
-                            _this.text("-")
-                                 .removeClass("open")
-                                 .addClass("close")
-                                 .parent()
-                                 .find("> span > ul")
-                                 .slideDown(200);
+                    var head = document.getElementsByTagName("head")[0];
+                    head.appendChild(script);
+
+                    var timer = setInterval(function(){
+                        if(window.jQuery != undefined){
+                            clearInterval(timer);
+                            jQueryCode(window.jQuery);
                         }
-                        return false;
-                    });
-                });
-            })(jQuery);
+                    }, 100);
+                } else {
+                    jQueryCode(window.jQuery);
+                }
+            })();
         ';
-    }
-}
-
-/**
- * Service print_var
- * Class PrintVarService
- */
-class PrintVarService{
-    private static $service = null;
-
-    public static function Init(PrintVarSettings $settings=null){
-        if(!self::$service || isset($settings))
-            self::$service = new PrintVarService($settings);
-
-        return self::$service;
-    }
-
-    /**
-     * @var PrintVarSettings
-     */
-    private $settings;
-
-    private function __construct($settings){
-
-        $this->SetSettings($settings);
-        $this->PrintHead();
-    }
-
-    private function SetSettings($settings){
-        if(isset($settings)){
-            $this->settings = $settings;
-        } else {
-            $this->settings = new PrintVarSettings();
-        }
-    }
-
-    private function PrintHead(){
-        print '<link rel="stylesheet" type="text/css" href="' . $this->settings->jQueryUIThemeSource . '">';
-        $this->PrintStyle();
-
-        if(!$this->settings->useJS) return;
-
-        print '<script type="text/javascript" src="' . $this->settings->jQuerySource . '"></script>';
-        print '<script type="text/javascript" src="' . $this->settings->jQueryUISource . '"></script>';
-        $this->PrintScript();
     }
 
     private function PrintStyle(){
-        $style = $this->settings->GetStyle();
+        $style = $this->GetStyle();
         $style = preg_replace('/[\s]{2,}/', ' ', $style);
         $style = preg_replace('/\/\*[^\*\/]*\*\//', '', $style);
         $style = trim($style);
@@ -291,7 +385,7 @@ class PrintVarService{
     }
 
     private function PrintScript(){
-        $script = $this->settings->GetScript();
+        $script = $this->GetScript();
         $script = preg_replace('/[\s]{2,}/', ' ', $script);
         $script = preg_replace('/\/\*[^\*\/]*\*\//', '', $script);
         $script = trim($script);
@@ -299,7 +393,7 @@ class PrintVarService{
     }
 
     private function PrintButton(){
-        print '<div class="button ' . ($this->settings->minimize ? 'open' : 'close') . '">' . ($this->settings->minimize ? '+' : '-') . '</div>';
+        print '<div class="button close">-</div>';
     }
 
     private function PrintType($type){
@@ -418,7 +512,7 @@ class PrintVarService{
     private function PrintArray($var){
         print '<span class="count array">[' . count($var) . ']</span>';
         print '<span class="value">';
-        print '<ul' . ($this->settings->minimize ? ' style="display: none;"' : '') . '>';
+        print '<ul>';
 
         foreach($var as $key=>$value){
             print '<li>';
@@ -449,7 +543,7 @@ class PrintVarService{
 
         print '<span class="count object">{' . $countProps . '}</span>';
         print '<span class="value">';
-        print '<ul' . ($this->settings->minimize ? ' style="display: none;"' : '') . '>';
+        print '<ul>';
 
         foreach($props as $prop){
             if($prop->isStatic()) continue;
@@ -464,7 +558,7 @@ class PrintVarService{
 
             $name = $method->getName();
 
-            if(in_array($name, $this->settings->arMethodsExcept)) continue;
+            if(in_array($name, $this->arMethodsExcept)) continue;
 
             print '<li>';
             $this->PrintButton();
@@ -474,7 +568,7 @@ class PrintVarService{
 
             print '<span class="count method">(' . count($params) . ')</span>';
             print '<span class="value">';
-            print '<ul' . ($this->settings->minimize ? ' style="display: none;"' : '') . '>';
+            print '<ul>';
 
             foreach($params as $param){
                 $name = $param->getName();
@@ -498,11 +592,20 @@ class PrintVarService{
 
     public function PrintVar($var, $title=null){
         if(defined('DISABLE_PRINT_VAR')) return;
+        if(!$title) $title = '';
 
-        if(!$title) $title = 'Print Var';
-
-        print '<div id="print_var_container" class="print_var_container no_js" title="'.$title.'">';
-        $this->PrintValue($var, null, null, null);
+        print '<div id="print-var-modal" class="print-var-modal" style="display: none;">';
+            print '<div class="head">';
+                print '<span>PrintVar</span>';
+                print '<p>'.$title.'</p>';
+                print '<a class="button modal-close">x</a>';
+                print '<a class="button min">-</a>';
+            print '</div>';
+            print '<div class="body">';
+                print '<div id="print_var_container" class="print_var_container">';
+                $this->PrintValue($var, null, null, null);
+                print '</div>';
+            print '</div>';
         print '</div>';
     }
 }
