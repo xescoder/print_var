@@ -6,14 +6,13 @@
  */
 function print_var($var){
     $traces = debug_backtrace();
-    $title = null;
-
-    $file = '';
-    $line = '';
+    $title = '';
 
     foreach($traces as $trace){
         if($trace['function'] == 'print_var'){
-            $title = ($trace['file'] ? $trace['file'] : 'Print Var') . ($trace['line'] ? ': ' . $trace['line'] : '');
+            $title = ($trace['file'] ? $trace['file'] : '');
+            $title .= ($trace['file'] && $trace['line'] ? ': ' : '');
+            $title .= ($trace['line'] ? $trace['line'] : '');
             break;
         }
     }
@@ -40,10 +39,6 @@ class PrintVarService{
     );
 
     private function __construct(){
-        $this->PrintHead();
-    }
-
-    private function PrintHead(){
         $this->PrintStyle();
         $this->PrintScript();
     }
@@ -141,7 +136,7 @@ class PrintVarService{
             #print-var-modal .body {
                 overflow: visible;
                 overflow-y: auto;
-                height: 400px;
+                height: 300px;
                 padding: 10px 10px 0 10px;
             }
 
@@ -592,7 +587,6 @@ class PrintVarService{
 
     public function PrintVar($var, $title=null){
         if(defined('DISABLE_PRINT_VAR')) return;
-        if(!$title) $title = '';
 
         print '<div id="print-var-modal" class="print-var-modal" style="display: none;">';
             print '<div class="head">';
