@@ -72,7 +72,7 @@
                 background-color: rgb(160, 160, 160);
             }
 
-            #print-var-modal .modal-close, #print-var-modal .min{
+            #print-var-modal .modal-close, #print-var-modal .min, #print-var-modal .max{
                 font-size: 1.1em;
                 width: 1.1em;
                 line-height: 1.1em;
@@ -83,7 +83,7 @@
                 color: #fff;
             }
 
-            #print-var-modal .min{
+            #print-var-modal .min, #print-var-modal .max{
                 right: 35px;
             }
 
@@ -184,9 +184,31 @@
 
         <script>
             (function(undefined){
+                var jQuerySource = "http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js";
+
                 var jQueryCode = function($){
                     $(function(){
-                        var container = $(".print_var_container");
+                        var container = $(".print-var-modal");
+
+                        var position = function(container){
+                            container.each(function(){
+                                var c = $(this);
+                                var cw = c.width();
+                                var ch = c.height();
+
+                                var w = $(window);
+                                var ww = w.width();
+                                var wh = w.height();
+
+                                c.css({
+                                   top: ((wh - ch)/2) + "px",
+                                   left: ((ww - cw)/2) + "px"
+                                });
+                            });
+                        };
+
+                        container.appendTo("body").fadeIn();
+                        position(container);
 
                         container.find(".button").click(function(e){
                             e.preventDefault();
@@ -215,16 +237,49 @@
                                      .slideDown(200);
                                 return false;
                             }
+
+                            if(_this.hasClass("min")){
+                                _this.text("+")
+                                     .removeClass("min")
+                                     .addClass("max");
+
+                                container.find(".head")
+                                         .css("border-radius", "10px");
+
+                                container.css("padding-bottom", "0")
+                                         .find(".body")
+                                         .slideUp();
+                                return false;
+                            }
+
+                            if(_this.hasClass("max")){
+                                _this.text("-")
+                                     .removeClass("max")
+                                     .addClass("min");
+
+                                container.find(".head")
+                                         .css("border-radius", "10px 10px 0 0");
+
+                                container.css("padding-bottom", "10px")
+                                         .find(".body")
+                                         .slideDown();
+                                return false;
+                            }
+
+                            if(_this.hasClass("modal-close")){
+                                container.fadeOut();
+                                return false;
+                            }
                         });
                     });
                 };
 
                 if(window.jQuery == undefined){
-                    var script = document.createElement('script');
-                    script.src = 'http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js';
-                    script.type = 'text/javascript';
+                    var script = document.createElement("script");
+                    script.src = jQuerySource;
+                    script.type = "text/javascript";
 
-                    var head = document.getElementsByTagName('head')[0];
+                    var head = document.getElementsByTagName("head")[0];
                     head.appendChild(script);
 
                     var timer = setInterval(function(){
@@ -240,16 +295,20 @@
         </script>
     </head>
     <body>
-        <div id="print-var-modal" class="print-var-modal">
-            <div class="head">
-                <span>PrintVar</span>
-                <p>/Users/xescoder/Sites/print_var/example.php: 45</p>
-                <a class="button modal-close">x</a>
-                <a class="button min">-</a>
-            </div>
-            <div class="body">
+        <div id="div1">
+            <div id="div2">
 
-                <div id="print_var_container" class="print_var_container"><div class="button close">-</div><span class="type array">(array)</span><span class="count array">[9]</span><span class="value"><ul><li><span class="name">null</span><span class="separator">=&gt;</span><span class="value null">null</span></li><li><span class="name">bool</span><span class="separator">=&gt;</span><span class="type bool">(bool)</span><span class="value bool">true</span></li><li><span class="name">int</span><span class="separator">=&gt;</span><span class="type int">(int)</span><span class="value int">1234</span></li><li><span class="name">float</span><span class="separator">=&gt;</span><span class="type float">(float)</span><span class="value float">56.1111</span></li><li><span class="name">string</span><span class="separator">=&gt;</span><span class="type string">(string)</span><span class="value string">"string string string string string string string string string string string"</span></li><li><div class="button close">-</div><span class="name">array1</span><span class="separator">=&gt;</span><span class="type array">(array)</span><span class="count array">[2]</span><span class="value"><ul><li><div class="button close">-</div><span class="name">ints</span><span class="separator">=&gt;</span><span class="type array">(array)</span><span class="count array">[6]</span><span class="value"><ul><li><span class="name">0</span><span class="separator">=&gt;</span><span class="type int">(int)</span><span class="value int">1</span></li><li><span class="name">1</span><span class="separator">=&gt;</span><span class="type int">(int)</span><span class="value int">2</span></li><li><span class="name">2</span><span class="separator">=&gt;</span><span class="type int">(int)</span><span class="value int">3</span></li><li><span class="name">3</span><span class="separator">=&gt;</span><span class="type int">(int)</span><span class="value int">4</span></li><li><span class="name">4</span><span class="separator">=&gt;</span><span class="type int">(int)</span><span class="value int">5</span></li><li><span class="name">5</span><span class="separator">=&gt;</span><span class="type int">(int)</span><span class="value int">6</span></li></ul></span></li><li><div class="button close">-</div><span class="name">strings</span><span class="separator">=&gt;</span><span class="type array">(array)</span><span class="count array">[4]</span><span class="value"><ul><li><span class="name">0</span><span class="separator">=&gt;</span><span class="type string">(string)</span><span class="value string">"one"</span></li><li><span class="name">1</span><span class="separator">=&gt;</span><span class="type string">(string)</span><span class="value string">"two"</span></li><li><span class="name">2</span><span class="separator">=&gt;</span><span class="type string">(string)</span><span class="value string">"three"</span></li><li><span class="name">3</span><span class="separator">=&gt;</span><span class="type string">(string)</span><span class="value string">"four"</span></li></ul></span></li></ul></span></li><li><div class="button close">-</div><span class="name">array2</span><span class="separator">=&gt;</span><span class="type array">(array)</span><span class="count array">[2]</span><span class="value"><ul><li><div class="button close">-</div><span class="name">ints</span><span class="separator">=&gt;</span><span class="type array">(array)</span><span class="count array">[6]</span><span class="value"><ul><li><span class="name">0</span><span class="separator">=&gt;</span><span class="type int">(int)</span><span class="value int">1</span></li><li><span class="name">1</span><span class="separator">=&gt;</span><span class="type int">(int)</span><span class="value int">2</span></li><li><span class="name">2</span><span class="separator">=&gt;</span><span class="type int">(int)</span><span class="value int">3</span></li><li><span class="name">3</span><span class="separator">=&gt;</span><span class="type int">(int)</span><span class="value int">4</span></li><li><span class="name">4</span><span class="separator">=&gt;</span><span class="type int">(int)</span><span class="value int">5</span></li><li><span class="name">5</span><span class="separator">=&gt;</span><span class="type int">(int)</span><span class="value int">6</span></li></ul></span></li><li><div class="button close">-</div><span class="name">strings</span><span class="separator">=&gt;</span><span class="type array">(array)</span><span class="count array">[4]</span><span class="value"><ul><li><span class="name">0</span><span class="separator">=&gt;</span><span class="type string">(string)</span><span class="value string">"one"</span></li><li><span class="name">1</span><span class="separator">=&gt;</span><span class="type string">(string)</span><span class="value string">"two"</span></li><li><span class="name">2</span><span class="separator">=&gt;</span><span class="type string">(string)</span><span class="value string">"three"</span></li><li><span class="name">3</span><span class="separator">=&gt;</span><span class="type string">(string)</span><span class="value string">"four"</span></li></ul></span></li></ul></span></li><li><div class="button close">-</div><span class="name">array3</span><span class="separator">=&gt;</span><span class="type array">(array)</span><span class="count array">[2]</span><span class="value"><ul><li><div class="button close">-</div><span class="name">ints</span><span class="separator">=&gt;</span><span class="type array">(array)</span><span class="count array">[6]</span><span class="value"><ul><li><span class="name">0</span><span class="separator">=&gt;</span><span class="type int">(int)</span><span class="value int">1</span></li><li><span class="name">1</span><span class="separator">=&gt;</span><span class="type int">(int)</span><span class="value int">2</span></li><li><span class="name">2</span><span class="separator">=&gt;</span><span class="type int">(int)</span><span class="value int">3</span></li><li><span class="name">3</span><span class="separator">=&gt;</span><span class="type int">(int)</span><span class="value int">4</span></li><li><span class="name">4</span><span class="separator">=&gt;</span><span class="type int">(int)</span><span class="value int">5</span></li><li><span class="name">5</span><span class="separator">=&gt;</span><span class="type int">(int)</span><span class="value int">6</span></li></ul></span></li><li><div class="button close">-</div><span class="name">strings</span><span class="separator">=&gt;</span><span class="type array">(array)</span><span class="count array">[4]</span><span class="value"><ul><li><span class="name">0</span><span class="separator">=&gt;</span><span class="type string">(string)</span><span class="value string">"one"</span></li><li><span class="name">1</span><span class="separator">=&gt;</span><span class="type string">(string)</span><span class="value string">"two"</span></li><li><span class="name">2</span><span class="separator">=&gt;</span><span class="type string">(string)</span><span class="value string">"three"</span></li><li><span class="name">3</span><span class="separator">=&gt;</span><span class="type string">(string)</span><span class="value string">"four"</span></li></ul></span></li></ul></span></li><li><div class="button close">-</div><span class="name">object</span><span class="separator">=&gt;</span><span class="type object">TestObject</span><span class="count object">{3}</span><span class="value"><ul><li><span class="name">field1</span><span class="separator">=</span><span class="type int">(int)</span><span class="value int">1</span></li><li><span class="name">field2</span><span class="separator">=</span><span class="type bool">(bool)</span><span class="value bool">true</span></li><li><span class="name">field3</span><span class="separator">=</span><span class="type int">(int)</span><span class="value int">2</span></li><li><div class="button close">-</div><span class="name">Method1</span><span class="count method">(3)</span><span class="value"><ul><li><span class="name">$param1</span><span class="separator">=</span><span class="value null">null</span></li><li><span class="name">$param2</span><span class="separator">=</span><span class="type string">(string)</span><span class="value string">"str"</span></li><li><span class="name">$param3</span><span class="separator">=</span><span class="type float">(float)</span><span class="value float">12.34</span></li></ul></span></li><li><div class="button close">-</div><span class="name">Method2</span><span class="count method">(2)</span><span class="value"><ul><li><span class="name">$param1</span></li><li><span class="name">$param2</span></li></ul></span></li></ul></span></li></ul></span></div>
+                <div id="print-var-modal" class="print-var-modal" style="display: none;">
+                    <div class="head">
+                        <span>PrintVar</span>
+                        <p>/Users/xescoder/Sites/print_var/example.php: 45</p>
+                        <a class="button modal-close">x</a>
+                        <a class="button min">-</a>
+                    </div>
+                    <div class="body">
+                        <div id="print_var_container" class="print_var_container"><div class="button close">-</div><span class="type array">(array)</span><span class="count array">[9]</span><span class="value"><ul><li><span class="name">null</span><span class="separator">=&gt;</span><span class="value null">null</span></li><li><span class="name">bool</span><span class="separator">=&gt;</span><span class="type bool">(bool)</span><span class="value bool">true</span></li><li><span class="name">int</span><span class="separator">=&gt;</span><span class="type int">(int)</span><span class="value int">1234</span></li><li><span class="name">float</span><span class="separator">=&gt;</span><span class="type float">(float)</span><span class="value float">56.1111</span></li><li><span class="name">string</span><span class="separator">=&gt;</span><span class="type string">(string)</span><span class="value string">"string string string string string string string string string string string"</span></li><li><div class="button close">-</div><span class="name">array1</span><span class="separator">=&gt;</span><span class="type array">(array)</span><span class="count array">[2]</span><span class="value"><ul><li><div class="button close">-</div><span class="name">ints</span><span class="separator">=&gt;</span><span class="type array">(array)</span><span class="count array">[6]</span><span class="value"><ul><li><span class="name">0</span><span class="separator">=&gt;</span><span class="type int">(int)</span><span class="value int">1</span></li><li><span class="name">1</span><span class="separator">=&gt;</span><span class="type int">(int)</span><span class="value int">2</span></li><li><span class="name">2</span><span class="separator">=&gt;</span><span class="type int">(int)</span><span class="value int">3</span></li><li><span class="name">3</span><span class="separator">=&gt;</span><span class="type int">(int)</span><span class="value int">4</span></li><li><span class="name">4</span><span class="separator">=&gt;</span><span class="type int">(int)</span><span class="value int">5</span></li><li><span class="name">5</span><span class="separator">=&gt;</span><span class="type int">(int)</span><span class="value int">6</span></li></ul></span></li><li><div class="button close">-</div><span class="name">strings</span><span class="separator">=&gt;</span><span class="type array">(array)</span><span class="count array">[4]</span><span class="value"><ul><li><span class="name">0</span><span class="separator">=&gt;</span><span class="type string">(string)</span><span class="value string">"one"</span></li><li><span class="name">1</span><span class="separator">=&gt;</span><span class="type string">(string)</span><span class="value string">"two"</span></li><li><span class="name">2</span><span class="separator">=&gt;</span><span class="type string">(string)</span><span class="value string">"three"</span></li><li><span class="name">3</span><span class="separator">=&gt;</span><span class="type string">(string)</span><span class="value string">"four"</span></li></ul></span></li></ul></span></li><li><div class="button close">-</div><span class="name">array2</span><span class="separator">=&gt;</span><span class="type array">(array)</span><span class="count array">[2]</span><span class="value"><ul><li><div class="button close">-</div><span class="name">ints</span><span class="separator">=&gt;</span><span class="type array">(array)</span><span class="count array">[6]</span><span class="value"><ul><li><span class="name">0</span><span class="separator">=&gt;</span><span class="type int">(int)</span><span class="value int">1</span></li><li><span class="name">1</span><span class="separator">=&gt;</span><span class="type int">(int)</span><span class="value int">2</span></li><li><span class="name">2</span><span class="separator">=&gt;</span><span class="type int">(int)</span><span class="value int">3</span></li><li><span class="name">3</span><span class="separator">=&gt;</span><span class="type int">(int)</span><span class="value int">4</span></li><li><span class="name">4</span><span class="separator">=&gt;</span><span class="type int">(int)</span><span class="value int">5</span></li><li><span class="name">5</span><span class="separator">=&gt;</span><span class="type int">(int)</span><span class="value int">6</span></li></ul></span></li><li><div class="button close">-</div><span class="name">strings</span><span class="separator">=&gt;</span><span class="type array">(array)</span><span class="count array">[4]</span><span class="value"><ul><li><span class="name">0</span><span class="separator">=&gt;</span><span class="type string">(string)</span><span class="value string">"one"</span></li><li><span class="name">1</span><span class="separator">=&gt;</span><span class="type string">(string)</span><span class="value string">"two"</span></li><li><span class="name">2</span><span class="separator">=&gt;</span><span class="type string">(string)</span><span class="value string">"three"</span></li><li><span class="name">3</span><span class="separator">=&gt;</span><span class="type string">(string)</span><span class="value string">"four"</span></li></ul></span></li></ul></span></li><li><div class="button close">-</div><span class="name">array3</span><span class="separator">=&gt;</span><span class="type array">(array)</span><span class="count array">[2]</span><span class="value"><ul><li><div class="button close">-</div><span class="name">ints</span><span class="separator">=&gt;</span><span class="type array">(array)</span><span class="count array">[6]</span><span class="value"><ul><li><span class="name">0</span><span class="separator">=&gt;</span><span class="type int">(int)</span><span class="value int">1</span></li><li><span class="name">1</span><span class="separator">=&gt;</span><span class="type int">(int)</span><span class="value int">2</span></li><li><span class="name">2</span><span class="separator">=&gt;</span><span class="type int">(int)</span><span class="value int">3</span></li><li><span class="name">3</span><span class="separator">=&gt;</span><span class="type int">(int)</span><span class="value int">4</span></li><li><span class="name">4</span><span class="separator">=&gt;</span><span class="type int">(int)</span><span class="value int">5</span></li><li><span class="name">5</span><span class="separator">=&gt;</span><span class="type int">(int)</span><span class="value int">6</span></li></ul></span></li><li><div class="button close">-</div><span class="name">strings</span><span class="separator">=&gt;</span><span class="type array">(array)</span><span class="count array">[4]</span><span class="value"><ul><li><span class="name">0</span><span class="separator">=&gt;</span><span class="type string">(string)</span><span class="value string">"one"</span></li><li><span class="name">1</span><span class="separator">=&gt;</span><span class="type string">(string)</span><span class="value string">"two"</span></li><li><span class="name">2</span><span class="separator">=&gt;</span><span class="type string">(string)</span><span class="value string">"three"</span></li><li><span class="name">3</span><span class="separator">=&gt;</span><span class="type string">(string)</span><span class="value string">"four"</span></li></ul></span></li></ul></span></li><li><div class="button close">-</div><span class="name">object</span><span class="separator">=&gt;</span><span class="type object">TestObject</span><span class="count object">{3}</span><span class="value"><ul><li><span class="name">field1</span><span class="separator">=</span><span class="type int">(int)</span><span class="value int">1</span></li><li><span class="name">field2</span><span class="separator">=</span><span class="type bool">(bool)</span><span class="value bool">true</span></li><li><span class="name">field3</span><span class="separator">=</span><span class="type int">(int)</span><span class="value int">2</span></li><li><div class="button close">-</div><span class="name">Method1</span><span class="count method">(3)</span><span class="value"><ul><li><span class="name">$param1</span><span class="separator">=</span><span class="value null">null</span></li><li><span class="name">$param2</span><span class="separator">=</span><span class="type string">(string)</span><span class="value string">"str"</span></li><li><span class="name">$param3</span><span class="separator">=</span><span class="type float">(float)</span><span class="value float">12.34</span></li></ul></span></li><li><div class="button close">-</div><span class="name">Method2</span><span class="count method">(2)</span><span class="value"><ul><li><span class="name">$param1</span></li><li><span class="name">$param2</span></li></ul></span></li></ul></span></li></ul></span></div>
+                    </div>
+                </div>
 
             </div>
         </div>
