@@ -41,7 +41,12 @@
                 padding: 10px;
                 font-family: Arial;
                 position: relative;
-                cursor: move;
+                cursor: default;
+                -moz-user-select: none;
+                -khtml-user-select: none;
+                -webkit-user-select: none;
+                -o-user-select: none;
+                user-select: none;
             }
 
             #print-var-modal .head span{
@@ -209,6 +214,34 @@
 
                         container.appendTo("body").fadeIn();
                         position(container);
+
+                        var head =  container.find(".head");
+                        var current = null;
+                        var delta = null;
+
+                        head.mousedown(function(e){
+                            var _this = $(this);
+                            _this.css("cursor", "move");
+                            current = _this.closest(".print-var-modal");
+                            delta = current.offset();
+                            delta.top -= e.pageY;
+                            delta.left -= e.pageX;
+                        });
+                        head.bind("mouseup mouseleave", function(){
+                            var _this = $(this);
+                            _this.css("cursor", "default");
+                            current = null;
+                        });
+                        $('body').mousemove(function(e){
+                            if(current){
+                                current.css({
+                                    top:  (e.pageY + delta.top)+"px",
+                                    left: (e.pageX + delta.left)+"px",
+                                });
+
+                                current.find(".head").css("cursor", "move");
+                            }
+                        });
 
                         container.find(".button").click(function(e){
                             e.preventDefault();
