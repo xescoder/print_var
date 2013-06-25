@@ -74,6 +74,7 @@ class PrintVarService{
                 box-shadow: 0 0 7px rgb(230, 230, 230);
                 padding-bottom: 10px;
                 max-width: 900px;
+                background-color: white;
             }
 
             #print-var-modal .head {
