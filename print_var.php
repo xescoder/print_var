@@ -46,22 +46,59 @@ class PrintVarService{
     private function GetStyle(){
         return '
             /* Style reset */
-            #print-var-modal div,
-            #print-var-modal li,
-            #print-var-modal span,
-            #print-var-modal ul{
-                border: 0;
-                margin: 0;
+            #print-var-modal * {
+                font: normal normal normal 16px Courier;
+                font-stretch: normal;
+                background: transparent none repeat scroll 0% 0%;
+                background-image: none;
+                background-size: auto;
+                color: black;
+                float: none;
+                overflow: visible;
+                display: inline;
+                clip: auto;
+                clear: none;
+                visibility: visible;
+                vertical-align: baseline;
+                word-break: normal;
+                tab-size: 8;
+                text-align-last: start;
+                text-transform: none;
+                text-shadow: none;
+                text-indent: 0;
+                text-decoration: none;
+                text-align: left;
+                text-overflow: clip;
+                word-wrap: normal;
+                writing-mode: lr-tb;
+                direction: ltr;
+                letter-spacing: normal;
+                white-space: normal;
+                unicode-bidi: normal;
+                list-style: none outside none;
+                border-radius: 0;
+                height: auto;
+                min-width: 0;
+                min-height: 0;
+                max-width: none;
+                max-height: none;
+                width: auto;
+                box-sizing: content-box;
                 padding: 0;
-                font-size: 100%;
-            }
-
-            #print-var-modal ul {
-                list-style: none;
-            }
-
-            #print-var-modal li {
-                display: list-item;
+                bottom: auto;
+                left: auto;
+                right: auto;
+                position: static;
+                z-index: auto;
+                top: auto;
+                margin: 0;
+                counter-reset: none;
+                counter-increment: none;
+                content: none;
+                quotes: " ";
+                cursor: auto;
+                border: medium none transparent;
+                outline: invert none medium;
             }
 
             /* Styles */
@@ -75,6 +112,12 @@ class PrintVarService{
                 padding-bottom: 10px;
                 max-width: 900px;
                 background-color: white;
+            }
+
+            #print-var-modal div,
+            #print-var-modal ul,
+            #print-var-modal p {
+                display: block;
             }
 
             #print-var-modal .head {
@@ -155,10 +198,13 @@ class PrintVarService{
             #print_var_container ul {
                 overflow: visible;
                 list-style-type: none;
-                display: block;
                 margin: 0 0 8px  -13px;
                 padding: 0 0 0 45px;
                 border-left: rgb(226, 226, 226) 1px dotted;
+            }
+
+            #print-var-modal li {
+                display: list-item;
             }
 
             #print_var_container .button {
