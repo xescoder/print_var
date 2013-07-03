@@ -456,14 +456,18 @@ class PrintVarService{
 
     private function PrintName($name, $prefix=null){
         if(is_null($name)) return;
+
         print '<span class="name">';
 
         if($prefix) print $prefix;
+        if(!$prefix && is_string($name)) print "'";
 
         if($name === 0) print '0';
         else if($name === false) print 'false';
-        else if($name === '') print '""';
+        else if($name === '') print "''";
         else print $name;
+
+        if(!$prefix && is_string($name)) print "'";
 
         print '</span>';
     }
@@ -556,9 +560,9 @@ class PrintVarService{
     }
 
     private function PrintString($var){
-        print '<span class="value string">"';
+        print '<span class="value string">\'';
         print $var ? $var : '';
-        print '"</span>';
+        print '\'</span>';
     }
 
     private function PrintArray($var){
