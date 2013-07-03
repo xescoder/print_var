@@ -180,8 +180,9 @@ class PrintVarService{
             #print-var-modal .body {
                 overflow: visible;
                 overflow-y: auto;
-                height: 300px;
                 padding: 10px 10px 0 10px;
+                max-height: 400px;
+                height: auto;
             }
 
             #print_var_container {
@@ -302,14 +303,8 @@ class PrintVarService{
                             });
                         };
 
-                        var size = function(container){
-                            var height = container.find(".print_var_container").height();
-                            container.find(".body").height(height > 400 ? 400 : height);
-                        };
-
                         container.appendTo("body").fadeIn();
                         position(container);
-                        size(container);
 
                         var head =  container.find(".head");
                         var current = null;
