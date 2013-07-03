@@ -302,9 +302,18 @@ class PrintVarService{
                                 });
                             });
                         };
+                        var padding = function(container){
+                            container.find(".print_var_container").each(function(){
+                                var body = $(this);
+                                if(!body.find(".button").length){
+                                    body.css("padding-left", 0);
+                                }
+                            });
+                        };
 
                         container.appendTo("body").fadeIn();
                         position(container);
+                        padding(container);
 
                         var head =  container.find(".head");
                         var current = null;

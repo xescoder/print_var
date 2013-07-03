@@ -1,17 +1,17 @@
 <?php
 
-class TestObject{
+class Class1 {
     private $prField = 'private';
 
     public $field1 = 1;
     public $field2 = true;
     public $field3 = 2;
 
-    public function Function1($param1, $param2='str', $param3=12.34){
+    public function Function1($param1, $param2='str', $param3=12.34) {
 
     }
 
-    public function Function2($param1, $param2){
+    public function Function2($param1, $param2) {
 
     }
 }
@@ -27,7 +27,7 @@ $arr = array(
         'ints' => array(1, 2, 3, 4, 5, 6),
         'strings' => array('one', 'two', 'three', 'four'),
     ),
-    'object' => new TestObject()
+    'object' => new Class1()
 );
 
 /*  include print_var tool  */
