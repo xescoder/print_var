@@ -6,7 +6,7 @@
  */
 function print_var($var){
     if(defined('DISABLE_PRINT_VAR')) return;
-    
+
     $traces = debug_backtrace();
     $title = '';
 
@@ -321,6 +321,7 @@ class PrintVarService{
                         var current = null;
                         var delta = null;
 
+
                         head.mousedown(function(e){
                             var _this = $(this);
                             _this.css("cursor", "move");
@@ -348,6 +349,7 @@ class PrintVarService{
                         container.find(".button").click(function(e){
                             e.preventDefault();
                             var _this = $(this);
+                            var dialog = _this.closest(".print-var-modal");
 
                             if(_this.hasClass("close")){
                                 _this.text("+")
@@ -374,39 +376,35 @@ class PrintVarService{
                             }
 
                             if(_this.hasClass("min")){
-                                var current = _this.closest(".print-var-modal");
-
                                 _this.text("+")
                                      .removeClass("min")
                                      .addClass("max");
 
-                                current.find(".head")
+                                dialog.find(".head")
                                          .css("border-radius", "10px");
 
-                                current.css("padding-bottom", "0")
+                                dialog.css("padding-bottom", "0")
                                          .find(".body")
                                          .slideUp();
                                 return false;
                             }
 
                             if(_this.hasClass("max")){
-                                var current = _this.closest(".print-var-modal");
-
                                 _this.text("-")
                                      .removeClass("max")
                                      .addClass("min");
 
-                                current.find(".head")
+                                dialog.find(".head")
                                          .css("border-radius", "10px 10px 0 0");
 
-                                current.css("padding-bottom", "10px")
+                                dialog.css("padding-bottom", "10px")
                                          .find(".body")
                                          .slideDown();
                                 return false;
                             }
 
                             if(_this.hasClass("modal-close")){
-                                container.fadeOut();
+                                dialog.fadeOut().remove();
                                 return false;
                             }
                         });
