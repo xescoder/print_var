@@ -5,6 +5,8 @@
  * @param mixed $var
  */
 function print_var($var){
+    if(defined('DISABLE_PRINT_VAR')) return;
+    
     $traces = debug_backtrace();
     $title = '';
 
@@ -647,8 +649,6 @@ class PrintVarService{
     }
 
     public function PrintVar($var, $title=null){
-        if(defined('DISABLE_PRINT_VAR')) return;
-
         print '<div id="print-var-modal" class="print-var-modal" style="display: none;">';
             print '<div class="head">';
                 print '<span>PrintVar</span>';
