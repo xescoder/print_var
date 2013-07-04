@@ -374,28 +374,32 @@ class PrintVarService{
                             }
 
                             if(_this.hasClass("min")){
+                                var current = _this.closest(".print-var-modal");
+
                                 _this.text("+")
                                      .removeClass("min")
                                      .addClass("max");
 
-                                container.find(".head")
+                                current.find(".head")
                                          .css("border-radius", "10px");
 
-                                container.css("padding-bottom", "0")
+                                current.css("padding-bottom", "0")
                                          .find(".body")
                                          .slideUp();
                                 return false;
                             }
 
                             if(_this.hasClass("max")){
+                                var current = _this.closest(".print-var-modal");
+
                                 _this.text("-")
                                      .removeClass("max")
                                      .addClass("min");
 
-                                container.find(".head")
+                                current.find(".head")
                                          .css("border-radius", "10px 10px 0 0");
 
-                                container.css("padding-bottom", "10px")
+                                current.css("padding-bottom", "10px")
                                          .find(".body")
                                          .slideDown();
                                 return false;
