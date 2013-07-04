@@ -321,6 +321,15 @@ class PrintVarService{
                         var current = null;
                         var delta = null;
 
+                        container.mousedown(function(){
+                            var dialog = $(this).closest(".print-var-modal");
+                            container.css("z-index", 999999999);
+                            dialog.css("z-index", 1000000000);
+                            return false;
+                        });
+                        container.bind("mouseup mouseleave click", function(){
+                            return false;
+                        });
 
                         head.mousedown(function(e){
                             var _this = $(this);
@@ -347,7 +356,6 @@ class PrintVarService{
                         });
 
                         container.find(".button").click(function(e){
-                            e.preventDefault();
                             var _this = $(this);
                             var dialog = _this.closest(".print-var-modal");
 
@@ -362,7 +370,7 @@ class PrintVarService{
                                      .text("+")
                                      .removeClass("close")
                                      .addClass("open");
-                                return false;
+                                return true;
                             }
 
                             if(_this.hasClass("open")){
@@ -372,7 +380,7 @@ class PrintVarService{
                                      .parent()
                                      .find("> span > ul")
                                      .slideDown(200);
-                                return false;
+                                return true;
                             }
 
                             if(_this.hasClass("min")){
@@ -386,7 +394,7 @@ class PrintVarService{
                                 dialog.css("padding-bottom", "0")
                                          .find(".body")
                                          .slideUp();
-                                return false;
+                                return true;
                             }
 
                             if(_this.hasClass("max")){
@@ -400,12 +408,12 @@ class PrintVarService{
                                 dialog.css("padding-bottom", "10px")
                                          .find(".body")
                                          .slideDown();
-                                return false;
+                                return true;
                             }
 
                             if(_this.hasClass("modal-close")){
                                 dialog.fadeOut().remove();
-                                return false;
+                                return true;
                             }
                         });
                     });
