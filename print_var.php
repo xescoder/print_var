@@ -284,18 +284,38 @@ class PrintVarService{
                         var container = $(".print-var-modal");
 
                         var position = function(container){
+                            var w = $(window);
+                            var ww = w.width();
+                            var wh = w.height();
+
+                            var dt = 40;
+                            var dl = 30;
+
+                            var count = container.length;
+                            var dtf = dt * count / 2;
+                            var dlf = dl * count / 2;
+
+                            var top = undefined;
+                            var left = undefined;
+
                             container.each(function(){
                                 var c = $(this);
-                                var cw = c.width();
-                                var ch = c.height();
 
-                                var w = $(window);
-                                var ww = w.width();
-                                var wh = w.height();
+                                if(top === undefined) {
+                                    top = (wh - c.height())/2 - dtf;
+                                    if(top < 0) top = 0;
+                                }
+                                else top += dt;
+
+                                if(left === undefined) {
+                                    left = (ww - c.width())/2 - dlf;
+                                    if(left < 0) left = 0;
+                                }
+                                else left += dl;
 
                                 c.css({
-                                   top: ((wh - ch)/2) + "px",
-                                   left: ((ww - cw)/2) + "px"
+                                   "top": top + "px",
+                                   "left": left + "px"
                                 });
                             });
                         };
@@ -366,8 +386,10 @@ class PrintVarService{
                         head.bind("mouseup mouseleave", function(){
                             var _this = $(this);
                             _this.css("cursor", "default");
-                            enableSelection(current);
-                            current = null;
+                            if(current) {
+                                enableSelection(current);
+                                current = null;
+                            }
                         });
                         $("body").mousemove(function(e){
                             if(current){
