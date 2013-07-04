@@ -129,11 +129,6 @@ class PrintVarService{
                 font-family: Arial;
                 position: relative;
                 cursor: default;
-                -moz-user-select: none;
-                -khtml-user-select: none;
-                -webkit-user-select: none;
-                -o-user-select: none;
-                user-select: none;
             }
 
             #print-var-modal .head span{
@@ -313,6 +308,34 @@ class PrintVarService{
                             });
                         };
 
+                        var onselectstarthandler = function(){
+                            return false;
+                        };
+                        var disableSelection = function(dialog){
+                            dialog.attr("unselectable", "on");
+                            dialog.css({
+                                "-moz-user-select": "none",
+                                "-o-user-select": "none",
+                                "-khtml-user-select": "none",
+                                "-webkit-user-select": "none",
+                                "-ms-user-select": "none",
+                                "user-select": "none",
+                            });
+                            dialog.bind("onselectstart", onselectstarthandler);
+                        };
+                        var enableSelection = function(dialog){
+                            dialog.removeAttr("unselectable");
+                            dialog.css({
+                                "-moz-user-select": "text",
+                                "-o-user-select": "auto",
+                                "-khtml-user-select": "auto",
+                                "-webkit-user-select": "auto",
+                                "-ms-user-select": "auto",
+                                "user-select": "auto",
+                            });
+                            dialog.unbind("onselectstart", onselectstarthandler);
+                        };
+
                         container.appendTo("body").fadeIn();
                         position(container);
                         padding(container);
@@ -335,6 +358,7 @@ class PrintVarService{
                             var _this = $(this);
                             _this.css("cursor", "move");
                             current = _this.closest(".print-var-modal");
+                            disableSelection(current);
                             delta = current.offset();
                             delta.top -= e.pageY;
                             delta.left -= e.pageX;
@@ -342,6 +366,7 @@ class PrintVarService{
                         head.bind("mouseup mouseleave", function(){
                             var _this = $(this);
                             _this.css("cursor", "default");
+                            enableSelection(current);
                             current = null;
                         });
                         $("body").mousemove(function(e){
