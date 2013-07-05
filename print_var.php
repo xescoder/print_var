@@ -705,7 +705,7 @@ class PrintVarService{
         print '</ul></span>';
     }
 
-    public function PrintVar($var, $title=null, $head){
+    public function PrintVar($var, $title=null, $head='PrintVar'){
         print '<div id="print-var-modal" class="print-var-modal" style="display: none;">';
             print '<div class="head">';
                 print '<span>'.$head.'</span>';
