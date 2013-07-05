@@ -580,23 +580,17 @@ class PrintVarService{
         }
 
         if(is_array($var)){
-            $this->PrintButton();
-            $this->PrintName($name, $namePrefix);
-            $this->PrintSeparator($separator);
-            $this->PrintType('array');
-            $this->PrintArray($var);
+            $this->PrintArray($var, $name, $separator, $namePrefix);
             return;
         }
 
         if(is_object($var)){
-            $this->PrintButton();
             $this->PrintObject($var, $name, $separator, $namePrefix);
             return;
         }
     }
 
     private function PrintNull($var){
-
         print '<span class="value null">null</span>';
     }
 
@@ -624,31 +618,37 @@ class PrintVarService{
         print '\'</span>';
     }
 
-    private function PrintArray($var){
+    private function PrintArray($var, $name=null, $separator='=', $namePrefix=null){
+        $countItems = count($var);
+
+        if($countItems > 0) $this->PrintButton();
+
+        $this->PrintName($name, $namePrefix);
+        $this->PrintSeparator($separator);
+        $this->PrintType('array');
+
         print '<span class="count array">[' . count($var) . ']</span>';
         print '<span class="value">';
-        print '<ul>';
 
-        foreach($var as $key=>$value){
-            print '<li>';
-            $this->PrintValue($value, $key, '=>');
-            print '</li>';
+        if(count($var) > 0){
+            print '<ul>';
+            foreach($var as $key=>$value){
+                print '<li>';
+                $this->PrintValue($value, $key, '=>');
+                print '</li>';
+            }
+            print '</ul>';
         }
 
-        print '</ul></span>';
+        print '</span>';
     }
 
     private function PrintObject($var, $name=null, $separator='=', $namePrefix=null){
-        $this->PrintName($name, $namePrefix);
-        $this->PrintSeparator($separator);
-
         $className = get_class($var);
 
         $reflect = new ReflectionClass($var);
         $props = $reflect->getProperties(ReflectionProperty::IS_PUBLIC);
         $methods = $reflect->getMethods(ReflectionMethod::IS_PUBLIC);
-
-        print '<span class="type object">' . $className . '</span>';
 
         $countProps = 0;
         foreach($props as $prop){
@@ -656,53 +656,70 @@ class PrintVarService{
             $countProps++;
         }
 
+        $canPrintValue = ($countProps+count($methods)) > 0;
+
+        if($canPrintValue) $this->PrintButton();
+
+        $this->PrintName($name, $namePrefix);
+        $this->PrintSeparator($separator);
+
+        print '<span class="type object">' . $className . '</span>';
         print '<span class="count object">{' . $countProps . '}</span>';
+
         print '<span class="value">';
-        print '<ul>';
 
-        foreach($props as $prop){
-            if($prop->isStatic()) continue;
-
-            print '<li>';
-            $this->PrintValue($prop->getValue($var), $prop->getName(), '=');
-            print '</li>';
-        }
-
-        foreach($methods as $method){
-            if($method->isStatic()) continue;
-
-            $name = $method->getName();
-
-            if(in_array($name, $this->arMethodsExcept)) continue;
-
-            print '<li>';
-            $this->PrintButton();
-            print '<span class="name">' . $name . '</span>';
-
-            $params = $method->getParameters();
-
-            print '<span class="count method">(' . count($params) . ')</span>';
-            print '<span class="value">';
+        if($canPrintValue){
             print '<ul>';
 
-            foreach($params as $param){
-                $name = $param->getName();
+            foreach($props as $prop){
+                if($prop->isStatic()) continue;
 
                 print '<li>';
-                if($param->isDefaultValueAvailable())
-                {
-                    $default = $param->getDefaultValue();
-                    $this->PrintValue($default, $name, '=', '$');
-                } else {
-                    $this->PrintName($name, '$');
-                }
+                $this->PrintValue($prop->getValue($var), $prop->getName(), '=');
                 print '</li>';
             }
 
-            print '</ul></span>';
-        }
+            foreach($methods as $method){
+                if($method->isStatic()) continue;
 
-        print '</ul></span>';
+                $name = $method->getName();
+
+                if(in_array($name, $this->arMethodsExcept)) continue;
+
+                $params = $method->getParameters();
+
+                print '<li>';
+                if(count($params) > 0) $this->PrintButton();
+                print '<span class="name">' . $name . '</span>';
+
+                print '<span class="count method">(' . count($params) . ')</span>';
+                print '<span class="value">';
+
+                if(count($params) > 0){
+                    print '<ul>';
+
+                    foreach($params as $param){
+                        $name = $param->getName();
+
+                        print '<li>';
+                        if($param->isDefaultValueAvailable())
+                        {
+                            $default = $param->getDefaultValue();
+                            $this->PrintValue($default, $name, '=', '$');
+                        } else {
+                            $this->PrintName($name, '$');
+                        }
+                        print '</li>';
+                    }
+
+                    print '</ul>';
+                }
+
+                print '</span>';
+            }
+            print '</ul>';
+        }
+        print '</span>';
     }
 
     public function PrintVar($var, $title=null, $head='PrintVar'){
