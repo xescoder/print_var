@@ -36,6 +36,13 @@ include 'print_var.php';
 /*  disable all print_var  */
 // define('DISABLE_PRINT_VAR', true);
 
+/*  enable debug mode  */
+// PrintVarSettings::$DebugMode = true;
+
+/*  custom debug mode params  */
+// PrintVarSettings::$DebugParamName = 'view_variables';
+// PrintVarSettings::$DebugParamValue = 'true';
+
 /*  print variable  */
 print_var($arr);
 

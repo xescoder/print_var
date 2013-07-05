@@ -8,6 +8,11 @@
 function print_var($var, $head='PrintVar'){
     if(defined('DISABLE_PRINT_VAR')) return;
 
+    if(PrintVarSettings::$DebugMode){
+        if(!isset($_GET[PrintVarSettings::$DebugParamName])) return;
+        if($_GET[PrintVarSettings::$DebugParamName] != PrintVarSettings::$DebugParamValue) return;
+    }
+
     $traces = debug_backtrace();
     $title = '';
 
@@ -21,6 +26,29 @@ function print_var($var, $head='PrintVar'){
     }
 
     PrintVarService::Init()->PrintVar($var, $title, $head);
+}
+
+/**
+ * Settings print_var
+ */
+class PrintVarSettings{
+    /**
+     * Enable debug mode
+     * @var bool
+     */
+    public static $DebugMode = false;
+
+    /**
+     * $_GET parametr name to enable print_var in debug mode
+     * @var string
+     */
+    public static $DebugParamName = 'print_var';
+
+    /**
+     * $_GET parametr value to enable print_var in debug mode
+     * @var string
+     */
+    public static $DebugParamValue = 'y';
 }
 
 /**
