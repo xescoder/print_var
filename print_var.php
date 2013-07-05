@@ -8,7 +8,7 @@
 function print_var($var, $head='PrintVar'){
     if(defined('DISABLE_PRINT_VAR')) return;
 
-    if(PrintVarSettings::$DebugMode){
+    if(PrintVarSettings::$RunOnlyInDebugMode){
         if(!isset($_GET[PrintVarSettings::$DebugParamName])) return;
         if($_GET[PrintVarSettings::$DebugParamName] != PrintVarSettings::$DebugParamValue) return;
     }
@@ -36,7 +36,7 @@ class PrintVarSettings{
      * Enable debug mode
      * @var bool
      */
-    public static $DebugMode = false;
+    public static $RunOnlyInDebugMode = false;
 
     /**
      * $_GET parametr name to enable print_var in debug mode
