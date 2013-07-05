@@ -38,3 +38,7 @@ include 'print_var.php';
 
 /*  print variable  */
 print_var($arr);
+
+/*  print all defined variables  */
+print_var(get_defined_vars());
+
