@@ -3,6 +3,7 @@
 /**
  * Print variable function
  * @param mixed $var
+ * @param string $head
  */
 function print_var($var, $head='PrintVar'){
     if(defined('DISABLE_PRINT_VAR')) return;
