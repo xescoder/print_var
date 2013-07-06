@@ -61,3 +61,19 @@ PrintVarSettings::$DebugParamName = 'view_variables';
 PrintVarSettings::$DebugParamValue = 'true'
 `````
 
+Другие настройки
+----------------
+
+Вывод свёрнутыми значений массивов, объектов и функций.
+
+`````php
+// Свернуть при выводе значения массивов, объектов и функций
+PrintVarSettings::$MinimizeArrays = true;
+`````
+
+Запуск диалогового окна свёрнутым
+
+`````php
+// Свернуть диалоговое окно при запуске
+PrintVarSettings::$MinimizeDialog = true;
+`````
