@@ -43,6 +43,12 @@ include 'print_var.php';
 // PrintVarSettings::$DebugParamName = 'view_variables';
 // PrintVarSettings::$DebugParamValue = 'true';
 
+/*  minimize dialog at startup  */
+// PrintVarSettings::$MinimizeDialog = true;
+
+/*  minimize arrays, objects, functions at startup  */
+// PrintVarSettings::$MinimizeArrays = true;
+
 /*  print variable  */
 print_var($arr);
 

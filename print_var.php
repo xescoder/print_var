@@ -49,6 +49,18 @@ class PrintVarSettings{
      * @var string
      */
     public static $DebugParamValue = 'y';
+
+    /**
+     * Minimize dialog at startup
+     * @var bool
+     */
+    public static $MinimizeDialog = false;
+
+    /**
+     * Minimize arrays, objects, functions at startup
+     * @var type
+     */
+    public static $MinimizeArrays = false;
 }
 
 /**
@@ -145,6 +157,10 @@ class PrintVarService{
                 background-color: white;
             }
 
+            #print-var-modal.minimized {
+                padding-bottom: 0;
+            }
+
             #print-var-modal div,
             #print-var-modal ul,
             #print-var-modal p {
@@ -158,6 +174,10 @@ class PrintVarService{
                 font-family: Arial;
                 position: relative;
                 cursor: default;
+            }
+
+            #print-var-modal.minimized .head {
+                border-radius: 10px;
             }
 
             #print-var-modal .head span{
@@ -533,7 +553,7 @@ class PrintVarService{
     }
 
     private function PrintButton(){
-        print '<div class="button close">-</div>';
+        print '<div class="button ' . (PrintVarSettings::$MinimizeArrays ? 'open' : 'close') . '">' . (PrintVarSettings::$MinimizeArrays ? '+' : '-') . '</div>';
     }
 
     private function PrintType($type){
@@ -660,7 +680,7 @@ class PrintVarService{
         print '<span class="value">';
 
         if(count($var) > 0){
-            print '<ul>';
+            print '<ul ' . (PrintVarSettings::$MinimizeArrays ? 'style="display: none;"' : '') . '>';
             foreach($var as $key=>$value){
                 print '<li>';
                 $this->PrintValue($value, $key, '=>');
@@ -698,7 +718,7 @@ class PrintVarService{
         print '<span class="value">';
 
         if($canPrintValue){
-            print '<ul>';
+            print '<ul ' . (PrintVarSettings::$MinimizeArrays ? 'style="display: none;"' : '') . '>';
 
             foreach($props as $prop){
                 if($prop->isStatic()) continue;
@@ -725,7 +745,7 @@ class PrintVarService{
                 print '<span class="value">';
 
                 if(count($params) > 0){
-                    print '<ul>';
+                    print '<ul ' . (PrintVarSettings::$MinimizeArrays ? 'style="display: none;"' : '') . '>';
 
                     foreach($params as $param){
                         $name = $param->getName();
@@ -752,14 +772,14 @@ class PrintVarService{
     }
 
     public function PrintVar($var, $title=null, $head='PrintVar'){
-        print '<div id="print-var-modal" class="print-var-modal" style="display: none;">';
+        print '<div id="print-var-modal" class="print-var-modal ' . (PrintVarSettings::$MinimizeDialog ? 'minimized' : '') . '" style="display: none;">';
             print '<div class="head">';
                 print '<span>'.$head.'</span>';
                 print '<p>'.$title.'</p>';
                 print '<a class="button modal-close">x</a>';
                 print '<a class="button min">-</a>';
             print '</div>';
-            print '<div class="body">';
+            print '<div class="body" ' . (PrintVarSettings::$MinimizeDialog ? 'style="display: none;"' : '') . '>';
                 print '<div id="print_var_container" class="print_var_container">';
                 $this->PrintValue($var, null, null, null);
                 print '</div>';
