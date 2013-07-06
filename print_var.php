@@ -484,12 +484,9 @@ class PrintVarService{
                                      .removeClass("min")
                                      .addClass("max");
 
-                                dialog.find(".head")
-                                         .css("border-radius", "10px");
-
-                                dialog.css("padding-bottom", "0")
-                                         .find(".body")
-                                         .slideUp();
+                                dialog.addClass("minimized");
+                                dialog.find(".body")
+                                      .slideUp();
                                 return true;
                             }
 
@@ -498,12 +495,9 @@ class PrintVarService{
                                      .removeClass("max")
                                      .addClass("min");
 
-                                dialog.find(".head")
-                                         .css("border-radius", "10px 10px 0 0");
-
-                                dialog.css("padding-bottom", "10px")
-                                         .find(".body")
-                                         .slideDown();
+                                dialog.removeClass("minimized");
+                                dialog.find(".body")
+                                      .slideDown();
                                 return true;
                             }
 
@@ -777,7 +771,7 @@ class PrintVarService{
                 print '<span>'.$head.'</span>';
                 print '<p>'.$title.'</p>';
                 print '<a class="button modal-close">x</a>';
-                print '<a class="button min">-</a>';
+                print '<a class="button ' . (PrintVarSettings::$MinimizeDialog ? 'max' : 'min') . '">' . (PrintVarSettings::$MinimizeDialog ? '+' : '-') . '</a>';
             print '</div>';
             print '<div class="body" ' . (PrintVarSettings::$MinimizeDialog ? 'style="display: none;"' : '') . '>';
                 print '<div id="print_var_container" class="print_var_container">';
