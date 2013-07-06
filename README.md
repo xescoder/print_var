@@ -30,6 +30,16 @@ $str = 'variable';
 print_var($str);
 `````
 
+Деактивация
+-----------
+
+В случае если необходимо экстренно деактивировать все вызовы print_var достаточно определить константу DISABLE_PRINT_VAR в начале страницы.
+
+`````php
+// Деактивация print_var
+define('DISABLE_PRINT_VAR', true);
+`````
+
 Работа на продакшене
 --------------------
 
@@ -51,12 +61,3 @@ PrintVarSettings::$DebugParamName = 'view_variables';
 PrintVarSettings::$DebugParamValue = 'true'
 `````
 
-Деактивация
------------
-
-В случае если необходимо экстренно деактивировать все вызовы print_var достаточно определить константу DISABLE_PRINT_VAR в начале страницы.
-
-`````php
-// Деактивация print_var
-define('DISABLE_PRINT_VAR', true);
-`````
