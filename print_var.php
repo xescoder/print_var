@@ -4,7 +4,7 @@
  * Print variable function
  * @param mixed $var
  */
-function print_var($var){
+function print_var($var, $message=null){
     if(defined('DISABLE_PRINT_VAR')) return;
 
     $traces = debug_backtrace();
@@ -19,7 +19,7 @@ function print_var($var){
         }
     }
 
-    PrintVarService::Init()->PrintVar($var, $title);
+    PrintVarService::Init()->PrintVar($var, $title, $message);
 }
 
 /**
@@ -705,10 +705,10 @@ class PrintVarService{
         print '</ul></span>';
     }
 
-    public function PrintVar($var, $title=null){
+    public function PrintVar($var, $title=null, $message=null){
         print '<div id="print-var-modal" class="print-var-modal" style="display: none;">';
             print '<div class="head">';
-                print '<span>PrintVar</span>';
+                print '<span>' . $message  ? $message : 'PrintVar' . '</span>';
                 print '<p>'.$title.'</p>';
                 print '<a class="button modal-close">x</a>';
                 print '<a class="button min">-</a>';
