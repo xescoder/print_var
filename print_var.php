@@ -417,7 +417,6 @@ class PrintVarService{
                             var dialog = $(this).closest(".print-var-modal");
                             container.css("z-index", 999999999);
                             dialog.css("z-index", 1000000000);
-                            return false;
                         });
                         container.bind("mouseup mouseleave click", function(){
                             return false;
